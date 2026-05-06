@@ -121,7 +121,7 @@
 .prod-card { cursor: pointer; position: relative; transition: transform .3s ease; }
 .prod-card:hover { transform: translateY(-5px); }
 .prod-card:hover .prod-img-overlay { opacity: 1; }
-.prod-img { aspect-ratio: 3/4; position: relative; overflow: hidden; margin-bottom: .9rem; }
+.prod-img { aspect-ratio: 5/6; position: relative; overflow: hidden; margin-bottom: .9rem; }
 .prod-img-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 .prod-img-bg svg { width: 65%; height: 65%; }
 .prod-img-overlay { position: absolute; inset: 0; background: rgba(28,20,16,.42); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; opacity: 0; transition: opacity .3s; }
@@ -139,6 +139,21 @@
 
 .no-results { grid-column: 1/-1; text-align: center; padding: 5rem 2rem; }
 .no-results h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--muted); margin-bottom: 1rem; }
+
+/* PAGINATION */
+.pagination { display: flex; align-items: center; justify-content: center; gap: .3rem; margin-top: 3rem; }
+.page-btn {
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  background: none; border: 1px solid transparent; font-family: 'Jost', sans-serif;
+  font-size: .78rem; color: var(--muted); cursor: pointer; transition: all .2s;
+}
+.page-btn:hover { border-color: var(--border-neutral); color: var(--soft-black); }
+.page-btn.active { border-color: var(--soft-black); background: var(--soft-black); color: var(--cream); }
+.page-btn.active:hover { border-color: var(--rouge); background: var(--rouge); }
+.page-arrow { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: none; border: 1px solid var(--border-neutral); font-size: .9rem; color: var(--muted); cursor: pointer; transition: all .2s; }
+.page-arrow:hover { border-color: var(--soft-black); color: var(--soft-black); }
+.page-arrow:disabled { opacity: .3; cursor: default; }
+.page-dots { font-size: .78rem; color: var(--muted); padding: 0 .3rem; }
 
 /* PAGE HERO */
 .cat-hero { background: var(--rouge-pale); padding: 5rem 4rem 3rem; margin-top: 76px; border-bottom: 1px solid var(--border); }
@@ -283,6 +298,15 @@
   </div>
   <div class="active-filters" id="activeFilters"></div>
   <div class="products-grid" id="productsGrid"></div>
+  <div class="pagination">
+    <button class="page-arrow" disabled>&#8592;</button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <span class="page-dots">…</span>
+    <button class="page-btn">12</button>
+    <button class="page-arrow">&#8594;</button>
+  </div>
 </div>
 
 <div class="marquee-wrap">
