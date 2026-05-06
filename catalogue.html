@@ -7,10 +7,11 @@
 <link rel="stylesheet" href="style.css">
 <style>
 /* LAYOUT */
+html, body { overflow-x: hidden; }
 .catalogue-layout { padding: 2rem 4rem 5rem; margin-top: 90px; }
 
 /* TOOLBAR */
-.cat-toolbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.cat-toolbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
 .cat-left { display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0; }
 .cat-count { font-size: .8rem; color: var(--muted); margin-bottom: 1.2rem; }
 .cat-search-wrap {
@@ -187,6 +188,9 @@
   .nav-right { display: none; }
   .nav-burger { display: flex; }
   .mobile-menu { display: flex; }
+  /* Toolbar : filtre seul sur la 1re ligne, recherche pleine largeur en dessous */
+  .cat-left { width: 100%; }
+  .cat-search-wrap { width: 100%; flex-basis: 100%; }
 }
 @media (max-width: 540px) {
   .products-grid { grid-template-columns: 1fr; }
