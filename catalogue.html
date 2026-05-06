@@ -365,7 +365,7 @@ function renderProducts() {
   }
 
   document.getElementById('productsGrid').innerHTML = items.map(p => {
-    const badges = p.tags.map(t => `<div class="prod-badge ${t==='new'?'badge-new':t==='rare'?'badge-rare':'badge-cc'}">${t==='coup-de-coeur'?'♥':t==='new'?'Nouveau':'Rare'}</div>`).join('');
+    const badges = p.tags.map(t => `<div class="prod-badge ${t==='new'?'badge-new':t==='rare'?'badge-rare':'badge-cc'}">${t==='coup-de-coeur'?'Coup de cœur':t==='new'?'Nouveau':'Rare'}</div>`).join('');
     return `
     <div class="prod-card" onclick="navigate('produit.html?id=${p.id}')">
       <div class="prod-img" style="background:${p.bg}">
