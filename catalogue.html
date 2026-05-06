@@ -12,7 +12,7 @@
 /* TOOLBAR */
 .cat-toolbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
 .cat-left { display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0; }
-.cat-count { font-size: .82rem; color: var(--muted); }
+.cat-count { font-size: .8rem; color: var(--muted); margin-bottom: 1.2rem; }
 .cat-search-wrap {
   flex: 1; display: flex; align-items: center; gap: .6rem;
   border: 1px solid var(--border-neutral); padding: .55rem .9rem;
@@ -187,7 +187,6 @@
   .nav-right { display: none; }
   .nav-burger { display: flex; }
   .mobile-menu { display: flex; }
-  .cat-count { display: none; }
 }
 @media (max-width: 540px) {
   .products-grid { grid-template-columns: 1fr; }
@@ -367,13 +366,13 @@
         Filtres & Triage
         <span class="filter-badge" id="filterBadge" style="display:none">0</span>
       </button>
-      <span class="cat-count" id="resultsCount">12 pièces</span>
     </div>
     <div class="cat-search-wrap">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input class="cat-search-input" id="searchInput" type="search" placeholder="Rechercher une pièce…">
     </div>
   </div>
+  <span class="cat-count" id="resultsCount">12 pièces</span>
   <div class="active-filters" id="activeFilters"></div>
   <div class="products-grid" id="productsGrid"></div>
   <div class="pagination">
