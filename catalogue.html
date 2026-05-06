@@ -10,9 +10,22 @@
 .catalogue-layout { padding: 2rem 4rem 5rem; margin-top: 90px; }
 
 /* TOOLBAR */
-.cat-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-.cat-left { display: flex; align-items: center; gap: 1.2rem; }
+.cat-toolbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.cat-left { display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0; }
 .cat-count { font-size: .82rem; color: var(--muted); }
+.cat-search-wrap {
+  flex: 1; display: flex; align-items: center; gap: .6rem;
+  border: 1px solid var(--border-neutral); padding: .55rem .9rem;
+  transition: border-color .25s;
+}
+.cat-search-wrap:focus-within { border-color: var(--soft-black); }
+.cat-search-wrap svg { flex-shrink: 0; color: var(--muted); }
+.cat-search-input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-family: 'Jost', sans-serif; font-size: .82rem; color: var(--soft-black);
+  letter-spacing: .04em;
+}
+.cat-search-input::placeholder { color: var(--muted); }
 .filter-btn {
   display: inline-flex; align-items: center; gap: .55rem;
   background: var(--soft-black); color: var(--cream);
@@ -174,10 +187,6 @@
   .nav-right { display: none; }
   .nav-burger { display: flex; }
   .mobile-menu { display: flex; }
-  /* Toolbar : filtre + recherche sur la même ligne */
-  .cat-toolbar { flex-wrap: nowrap; gap: .6rem; }
-  .cat-left { flex: 1; min-width: 0; }
-  .cat-search-mobile { display: inline-flex; }
   .cat-count { display: none; }
 }
 @media (max-width: 540px) {
@@ -227,17 +236,6 @@
 }
 .mobile-menu-actions button:hover { border-color: var(--rouge-light); color: var(--white); }
 
-/* Bouton recherche dans toolbar (mobile only) */
-.cat-search-mobile {
-  display: none;
-  align-items: center; gap: .5rem;
-  background: transparent; border: 1px solid var(--border-neutral);
-  font-family: 'Jost', sans-serif; font-size: .74rem; font-weight: 500;
-  letter-spacing: .13em; text-transform: uppercase; color: var(--muted);
-  padding: .65rem 1.1rem; cursor: pointer; transition: border-color .25s, color .25s;
-  white-space: nowrap;
-}
-.cat-search-mobile:hover { border-color: var(--soft-black); color: var(--soft-black); }
 </style>
 </head>
 <body>
@@ -371,10 +369,10 @@
       </button>
       <span class="cat-count" id="resultsCount">12 pièces</span>
     </div>
-    <button class="cat-search-mobile" aria-label="Rechercher">
+    <div class="cat-search-wrap">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Rechercher
-    </button>
+      <input class="cat-search-input" id="searchInput" type="search" placeholder="Rechercher une pièce…">
+    </div>
   </div>
   <div class="active-filters" id="activeFilters"></div>
   <div class="products-grid" id="productsGrid"></div>
