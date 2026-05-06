@@ -23,13 +23,13 @@
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden; margin-bottom: 1rem;
 }
-.prod-main-img svg { width: 55%; height: 55%; }
+.prod-main-img svg { width: 80%; height: 80%; }
 .prod-main-img-inner { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 .prod-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; }
 .prod-thumb { aspect-ratio: 1; cursor: pointer; border: 1.5px solid transparent; transition: border-color .2s; display: flex; align-items: center; justify-content: center; }
 .prod-thumb.active { border-color: var(--rouge); }
 .prod-thumb:hover { border-color: var(--rouge-light); }
-.prod-thumb svg { width: 60%; height: 60%; }
+.prod-thumb svg { width: 72%; height: 72%; }
 .prod-condition-badge { position: absolute; top: 1rem; left: 1rem; background: var(--white); border: 1px solid var(--border-neutral); font-size: .62rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .8rem; color: var(--soft-black); }
 
 /* INFOS */
@@ -180,16 +180,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const savings = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
 
-  // Gallery
+  // Gallery — 4 variantes de fond pour les thumbnails
+  const thumbBgs = [p.bg, '#EDE8E0', '#E4DDD6', '#F2EDE8'];
   document.getElementById('prodGallery').innerHTML = `
     <div class="prod-main-img reveal-left" style="background:${p.bg}">
       <div class="prod-main-img-inner">${p.svg}</div>
       <div class="prod-condition-badge">${p.condition}</div>
     </div>
     <div class="prod-thumbs">
-      ${[p.bg, '#E8E0D4', '#F0EBE4', '#E4DDD6'].map((bg,i) => `
-        <div class="prod-thumb ${i===0?'active':''}" style="background:${bg}" onclick="this.parentElement.querySelectorAll('.prod-thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active')">
-          ${i===0?p.svg:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="20" fill="${p.colorHex}" opacity=".4"/></svg>`}
+      ${thumbBgs.map((bg, i) => `
+        <div class="prod-thumb ${i===0?'active':''}" style="background:${bg}" onclick="
+          this.parentElement.querySelectorAll('.prod-thumb').forEach(t=>t.classList.remove('active'));
+          this.classList.add('active');
+          document.querySelector('.prod-main-img').style.background='${bg}'
+        ">
+          ${p.svg}
         </div>
       `).join('')}
     </div>`;
@@ -241,6 +246,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="accordion-body"><div class="accordion-body-inner">Chaque pièce est inspectée et documentée avec honnêteté. Si l'état ne correspond pas à la description, nous remboursons intégralement.</div></div>
       </div>
     </div>`;
+
+  // Reveal — éléments générés dynamiquement, l'observer de app.js ne les voit pas
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 90);
+    });
+  });
 
   // Related
   const related = PRODUCTS.filter(x => x.id !== p.id && (x.category === p.category || x.tags.some(t=>p.tags.includes(t)))).slice(0,4);
