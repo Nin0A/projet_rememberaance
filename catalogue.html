@@ -12,7 +12,7 @@
 .sidebar { position: sticky; top: 110px; align-self: start; }
 .sidebar-section { margin-bottom: 2.2rem; padding-bottom: 2.2rem; border-bottom: 1px solid var(--border-neutral); }
 .sidebar-section:last-child { border-bottom: none; }
-.sidebar-title { font-size: .62rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
+.sidebar-title { font-size: .78rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
 .filter-list { list-style: none; }
 .filter-list li { margin-bottom: .55rem; }
 .filter-check { display: flex; align-items: center; gap: .7rem; cursor: pointer; padding: .2rem 0; }
@@ -49,7 +49,7 @@
 
 /* ACTIVE FILTERS */
 .active-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
-.active-filter-tag { background: var(--rouge-pale); color: var(--rouge); font-size: .68rem; font-weight: 500; letter-spacing: .08em; padding: .3rem .7rem; display: flex; align-items: center; gap: .4rem; cursor: pointer; }
+.active-filter-tag { background: var(--rouge-pale); color: var(--rouge); font-size: .82rem; font-weight: 500; letter-spacing: .08em; padding: .3rem .7rem; display: flex; align-items: center; gap: .4rem; cursor: pointer; }
 .active-filter-tag:hover { background: var(--rouge); color: var(--cream); }
 
 /* GRID */
@@ -62,16 +62,16 @@
 .prod-img-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 .prod-img-bg svg { width: 65%; height: 65%; }
 .prod-img-overlay { position: absolute; inset: 0; background: rgba(28,20,16,.42); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; opacity: 0; transition: opacity .3s; }
-.prod-badge { position: absolute; top: .7rem; left: .7rem; font-size: .58rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .25rem .7rem; }
+.prod-badge { position: absolute; top: .7rem; left: .7rem; font-size: .76rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .25rem .7rem; }
 .badge-new { background: var(--soft-black); color: var(--cream); }
 .badge-rare { background: var(--rouge); color: var(--cream); }
 .badge-cc { background: var(--rouge-pale); color: var(--rouge-deep); }
-.prod-cat { font-size: .62rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.prod-cat { font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
 .prod-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--soft-black); margin-bottom: .5rem; }
 .prod-bottom { display: flex; align-items: center; justify-content: space-between; }
 .prod-price { font-size: .9rem; font-weight: 500; color: var(--soft-black); }
 .prod-old { font-size: .78rem; color: var(--muted); text-decoration: line-through; margin-left: .4rem; }
-.prod-size { font-size: .65rem; color: var(--muted); letter-spacing: .06em; }
+.prod-size { font-size: .8rem; color: var(--muted); letter-spacing: .06em; }
 
 .no-results { grid-column: 1/-1; text-align: center; padding: 5rem 2rem; }
 .no-results h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--muted); margin-bottom: 1rem; }
@@ -98,31 +98,11 @@
   .cat-hero { padding: 3.5rem 1.5rem 1.5rem; }
 }
 
-/* CURSOR */
-html, html * { cursor: none !important; }
-@media(max-width:540px){ html, html * { cursor: auto !important; } }
-.cursor {
-  position: fixed; width: 10px; height: 10px;
-  background: var(--rouge); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width .35s cubic-bezier(0.4,0,0.2,1), height .35s cubic-bezier(0.4,0,0.2,1);
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
-}
-.cursor.expanded { width: 92px; height: 92px; }
-.cursor-label {
-  font-family: 'Jost', sans-serif; font-size: .58rem; font-weight: 500;
-  letter-spacing: .13em; text-transform: uppercase;
-  color: transparent; white-space: nowrap; pointer-events: none;
-  transition: color .15s ease .18s;
-}
-.cursor.expanded .cursor-label { color: var(--cream); }
 .prod-card:hover .prod-img-overlay { opacity: 0; }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"><span class="cursor-label">Voir plus</span></div>
 <div class="page-overlay" id="pageOverlay"><div class="overlay-logo">Remembrance</div></div>
 
 <nav id="navbar">
@@ -346,20 +326,6 @@ function removeFilter(key, val) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initShared();
-
-  // Curseur personnalisé
-  const cur = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cur.style.left = e.clientX + 'px';
-    cur.style.top = e.clientY + 'px';
-  });
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest('.prod-card')) cur.classList.add('expanded');
-  });
-  document.addEventListener('mouseout', e => {
-    const card = e.target.closest('.prod-card');
-    if (card && !card.contains(e.relatedTarget)) cur.classList.remove('expanded');
-  });
 
   renderProducts();
 

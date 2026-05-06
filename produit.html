@@ -30,14 +30,14 @@
 .prod-thumb.active { border-color: var(--rouge); }
 .prod-thumb:hover { border-color: var(--rouge-light); }
 .prod-thumb svg { width: 72%; height: 72%; }
-.prod-condition-badge { position: absolute; top: 1rem; left: 1rem; background: var(--white); border: 1px solid var(--border-neutral); font-size: .62rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .8rem; color: var(--soft-black); }
+.prod-condition-badge { position: absolute; top: 1rem; left: 1rem; background: var(--white); border: 1px solid var(--border-neutral); font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .8rem; color: var(--soft-black); }
 
 /* INFOS */
 .prod-info {}
 .prod-top-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-.prod-category { font-size: .65rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--rouge); }
+.prod-category { font-size: .8rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--rouge); }
 .prod-badges { display: flex; gap: .4rem; }
-.prod-badge-tag { font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .65rem; }
+.prod-badge-tag { font-size: .76rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .65rem; }
 .prod-h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--soft-black); line-height: 1.1; margin-bottom: 1.2rem; }
 .prod-prices { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .8rem; }
 .prod-price-main { font-size: 1.8rem; font-weight: 500; color: var(--soft-black); }
@@ -51,7 +51,7 @@
 /* Details grid */
 .prod-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1.8rem; }
 .detail-item { background: var(--warm); padding: .8rem 1rem; }
-.detail-label { font-size: .6rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.detail-label { font-size: .76rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
 .detail-val { font-size: .88rem; color: var(--soft-black); font-weight: 500; }
 
 /* CTA */
@@ -61,7 +61,7 @@
 
 /* Care */
 .prod-care { margin-bottom: 1.8rem; }
-.prod-care-title { font-size: .65rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
+.prod-care-title { font-size: .8rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
 .prod-care-list { list-style: none; }
 .prod-care-list li { font-size: .82rem; color: var(--muted); padding: .35rem 0; border-bottom: 1px solid var(--border-neutral); display: flex; align-items: center; gap: .6rem; }
 .prod-care-list li::before { content: '—'; color: var(--rouge); opacity: .5; }
@@ -109,9 +109,6 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="cursor-text" id="cursorText"></div>
 <div class="page-overlay" id="pageOverlay"><div class="overlay-logo">Remembrance</div></div>
 
 <nav id="navbar" class="scrolled">

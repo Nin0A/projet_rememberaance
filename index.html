@@ -45,58 +45,6 @@
       background: var(--cream);
       color: var(--soft-black);
       overflow-x: hidden;
-      cursor: none
-    }
-
-    html, html * { cursor: none !important; }
-    @media(max-width:540px){ html, html * { cursor: auto !important; } }
-
-    /* CURSOR */
-    .cursor {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background: var(--rouge);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width .35s cubic-bezier(0.4,0,0.2,1), height .35s cubic-bezier(0.4,0,0.2,1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .cursor.expanded {
-      width: 92px;
-      height: 92px;
-    }
-
-    .cursor-label {
-      font-family: 'Jost', sans-serif;
-      font-size: .58rem;
-      font-weight: 500;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      color: transparent;
-      white-space: nowrap;
-      pointer-events: none;
-      transition: color .15s ease .18s;
-    }
-
-    .cursor.expanded .cursor-label {
-      color: var(--cream);
-    }
-
-    @media(max-width:540px) {
-      body {
-        cursor: auto
-      }
-
-      .cursor {
-        display: none
-      }
     }
 
     /* PAGE OVERLAY */
@@ -280,7 +228,7 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      font-size: .55rem;
+      font-size: .72rem;
       display: flex;
       align-items: center;
       justify-content: center
@@ -407,7 +355,7 @@
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      font-size: .62rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -445,7 +393,7 @@
     }
 
     .slide-meta-label {
-      font-size: .58rem;
+      font-size: .76rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -478,7 +426,7 @@
       background: var(--rouge);
       color: var(--cream);
       text-decoration: none;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -500,7 +448,7 @@
       background: transparent;
       border: 1px solid rgba(250, 247, 242, .5);
       font-family: 'Jost', sans-serif;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 400;
       letter-spacing: .16em;
       text-transform: uppercase;
@@ -592,7 +540,7 @@
       bottom: 2.5rem;
       left: 3.5rem;
       z-index: 10;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 500;
       letter-spacing: .12em;
       color: rgba(250, 247, 242, .35);
@@ -649,7 +597,7 @@
       align-items: center;
       gap: 1.2rem;
       padding: 0 2rem;
-      font-size: .64rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -686,7 +634,7 @@
     }
 
     .drops-eyebrow {
-      font-size: .62rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .2em;
       text-transform: uppercase;
@@ -807,7 +755,7 @@
     }
 
     .drop-timer-label {
-      font-size: .54rem;
+      font-size: .72rem;
       font-weight: 500;
       letter-spacing: .22em;
       text-transform: uppercase;
@@ -839,7 +787,7 @@
     }
 
     .drop-palette-label {
-      font-size: .62rem;
+      font-size: .78rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--muted);
@@ -853,7 +801,7 @@
       background: transparent;
       border: 1px solid var(--border-n);
       font-family: 'Jost', sans-serif;
-      font-size: .66rem;
+      font-size: .8rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -951,7 +899,7 @@
     }
 
     .drop-mini-countdown-label {
-      font-size: .56rem;
+      font-size: .74rem;
       letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--muted)
@@ -1031,7 +979,7 @@
     }
 
     .section-eyebrow {
-      font-size: .62rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .2em;
       text-transform: uppercase;
@@ -1181,7 +1129,7 @@
       position: absolute;
       top: .75rem;
       left: .75rem;
-      font-size: .56rem;
+      font-size: .74rem;
       font-weight: 500;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -1196,7 +1144,7 @@
       position: absolute;
       top: .75rem;
       right: .75rem;
-      font-size: .56rem;
+      font-size: .74rem;
       font-weight: 500;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -1301,7 +1249,7 @@
       border: none;
       padding: .85rem 1.3rem;
       font-family: 'Jost', sans-serif;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -1315,7 +1263,7 @@
     }
 
     .nl-hint {
-      font-size: .68rem;
+      font-size: .82rem;
       color: var(--muted);
       margin-top: .7rem
     }
@@ -1394,7 +1342,7 @@
     }
 
     .testi-piece {
-      font-size: .68rem;
+      font-size: .82rem;
       color: var(--rouge);
       font-style: italic;
       margin-top: .1rem
@@ -1476,7 +1424,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: .65rem;
+      font-size: .8rem;
       color: rgba(250, 247, 242, .2)
     }
 
@@ -1486,7 +1434,7 @@
     }
 
     .footer-socials a {
-      font-size: .65rem;
+      font-size: .8rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: rgba(250, 247, 242, .28);
@@ -1768,7 +1716,6 @@
 
 <body>
 
-  <div class="cursor" id="cursor"><span class="cursor-label">Voir plus</span></div>
   <div class="page-overlay" id="pageOverlay">
     <div class="overlay-wordmark">Rememberaance</div>
   </div>
@@ -2286,22 +2233,6 @@
     /* ── INIT ── */
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => document.getElementById('pageOverlay').classList.add('gone'), 480);
-
-      // Cursor
-      const cur = document.getElementById('cursor');
-      document.addEventListener('mousemove', e => {
-        cur.style.left = e.clientX + 'px';
-        cur.style.top = e.clientY + 'px';
-      });
-
-      // Expansion sur les produits
-      document.addEventListener('mouseover', e => {
-        if (e.target.closest('.pc')) cur.classList.add('expanded');
-      });
-      document.addEventListener('mouseout', e => {
-        const pc = e.target.closest('.pc');
-        if (pc && !pc.contains(e.relatedTarget)) cur.classList.remove('expanded');
-      });
 
       // Nav on/off slider
       const nav = document.getElementById('navbar');
