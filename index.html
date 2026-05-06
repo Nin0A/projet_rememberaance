@@ -1108,21 +1108,16 @@
     .pieces-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.2rem
-    }
-
-    .pieces-grid .pc:nth-child(2) {
-      margin-top: 2.5rem
-    }
-
-    .pieces-grid .pc:nth-child(4) {
-      margin-top: 1.5rem
+      gap: 1.2rem;
+      align-items: start
     }
 
     .pc {
       cursor: pointer;
       position: relative;
-      transition: transform .35s
+      transition: transform .35s;
+      display: flex;
+      flex-direction: column
     }
 
     .pc:hover {
@@ -1213,7 +1208,8 @@
     .pc-footer {
       display: flex;
       align-items: center;
-      justify-content: space-between
+      justify-content: space-between;
+      margin-top: auto
     }
 
     .pc-price {
@@ -1318,22 +1314,21 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
-      margin-top: 3rem
+      margin-top: 3rem;
+      align-items: start
     }
 
     .testi-card {
       border: 1px solid var(--border-n);
       padding: 1.8rem;
       background: var(--cream);
-      transition: border-color .3s
+      transition: border-color .3s;
+      display: flex;
+      flex-direction: column
     }
 
     .testi-card:hover {
       border-color: var(--rouge)
-    }
-
-    .testi-card:nth-child(2) {
-      margin-top: 1.5rem
     }
 
     .testi-stars {
@@ -1355,7 +1350,8 @@
     .testi-author {
       display: flex;
       align-items: center;
-      gap: .7rem
+      gap: .7rem;
+      margin-top: auto
     }
 
     .testi-av {
@@ -1614,11 +1610,6 @@
         grid-template-columns: repeat(2, 1fr)
       }
 
-      .pieces-grid .pc:nth-child(2),
-      .pieces-grid .pc:nth-child(4) {
-        margin-top: 0
-      }
-
       .nl-section {
         grid-template-columns: 1fr;
         gap: 2rem
@@ -1626,10 +1617,6 @@
 
       .testi-grid {
         grid-template-columns: 1fr
-      }
-
-      .testi-card:nth-child(2) {
-        margin-top: 0
       }
 
       .footer-grid {
