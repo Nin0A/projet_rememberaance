@@ -51,25 +51,39 @@
     /* CURSOR */
     .cursor {
       position: fixed;
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background: var(--rouge);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
       transform: translate(-50%, -50%);
-      transition: transform .1s
+      transition: width .35s cubic-bezier(0.4,0,0.2,1), height .35s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .cursor-ring {
-      position: fixed;
-      width: 32px;
-      height: 32px;
-      border: 1px solid rgba(139, 26, 26, .4);
-      border-radius: 50%;
+    .cursor.expanded {
+      width: 92px;
+      height: 92px;
+    }
+
+    .cursor-label {
+      font-family: 'Jost', sans-serif;
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: transparent;
+      white-space: nowrap;
       pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%)
+      transition: color .15s ease .18s;
+    }
+
+    .cursor.expanded .cursor-label {
+      color: var(--cream);
     }
 
     @media(max-width:540px) {
@@ -77,8 +91,7 @@
         cursor: auto
       }
 
-      .cursor,
-      .cursor-ring {
+      .cursor {
         display: none
       }
     }
@@ -1752,8 +1765,7 @@
 
 <body>
 
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor" id="cursor"><span class="cursor-label">Voir plus</span></div>
   <div class="page-overlay" id="pageOverlay">
     <div class="overlay-wordmark">Rememberaance</div>
   </div>
@@ -2243,10 +2255,6 @@
         <div class="pc-bg" style="background:${p.bg}20">${p.svg}</div>
         <div class="pc-badge">Unique</div>
         ${p.tags.includes('new') ? '<div class="pc-badge-new">New</div>' : ''}
-        <div class="pc-overlay">
-          <button class="btn-slide-primary" style="font-size:.65rem;padding:.6rem 1.1rem" onclick="event.stopPropagation();Cart.add(${p.id})">+ Panier</button>
-          <button style="background:rgba(250,247,242,.1);border:1px solid rgba(250,247,242,.2);font-family:'Jost',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,247,242,.75);cursor:pointer;padding:.5rem .9rem" onclick="event.stopPropagation();go('produit.html?id=${p.id}')">Voir →</button>
-        </div>
       </div>
       <div class="pc-cat">${p.cat} · T.${p.size}</div>
       <div class="pc-name">${p.name}</div>
@@ -2278,10 +2286,20 @@
       setTimeout(() => document.getElementById('pageOverlay').classList.add('gone'), 480);
 
       // Cursor
-      const cur = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
-      let mx = 0, my = 0, rx = 0, ry = 0;
-      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx + 'px'; cur.style.top = my + 'px'; });
-      (function fr() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(fr); })();
+      const cur = document.getElementById('cursor');
+      document.addEventListener('mousemove', e => {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top = e.clientY + 'px';
+      });
+
+      // Expansion sur les produits
+      document.addEventListener('mouseover', e => {
+        if (e.target.closest('.pc')) cur.classList.add('expanded');
+      });
+      document.addEventListener('mouseout', e => {
+        const pc = e.target.closest('.pc');
+        if (pc && !pc.contains(e.relatedTarget)) cur.classList.remove('expanded');
+      });
 
       // Nav on/off slider
       const nav = document.getElementById('navbar');
