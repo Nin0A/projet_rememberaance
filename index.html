@@ -94,10 +94,14 @@ nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
 .btn-slide-ghost:hover{background:rgba(250,247,242,.15);color:var(--cream)}
 
 /* ARROWS */
-.slider-arrow{position:absolute;top:50%;z-index:10;transform:translateY(-50%);background:rgba(250,247,242,.08);border:1px solid rgba(250,247,242,.15);width:52px;height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .25s,border-color .25s;color:var(--cream);font-size:1.1rem}
-.slider-arrow:hover{background:rgba(250,247,242,.18);border-color:rgba(250,247,242,.35)}
+.slider-arrow{position:absolute;top:50%;z-index:10;transform:translateY(-50%);background:rgba(250,247,242,.08);border:1px solid rgba(250,247,242,.15);width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .25s,border-color .25s;color:var(--cream);font-size:1rem}
+.slider-arrow:hover{background:rgba(250,247,242,.2);border-color:rgba(250,247,242,.4)}
 .slider-arrow-prev{left:1.8rem}
 .slider-arrow-next{right:1.8rem}
+@media(min-width:1100px){
+  .slider-arrow-prev{left:auto;right:calc(43vw + 1.5rem)}
+  .slider-arrow-next{left:auto;right:5%}
+}
 
 /* DOTS */
 .slider-dots{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:.6rem;z-index:10}
@@ -122,33 +126,48 @@ nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
 
 /* DROPS */
 .drops-section{background:var(--warm);padding:5rem 3.5rem;position:relative;overflow:hidden;border-top:4px solid var(--rouge)}
-.drops-section::before{content:'';position:absolute;top:-80px;right:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(139,26,26,.07),transparent 65%);pointer-events:none}
-.drops-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem}
+.drops-section::before{content:'';position:absolute;top:-80px;right:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(139,26,26,.06),transparent 65%);pointer-events:none}
+.drops-header{margin-bottom:3rem}
 .drops-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--rouge);display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
 .drops-eyebrow::before{content:'';width:24px;height:1px;background:var(--rouge)}
 .drops-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--soft-black)}
 .drops-title em{font-style:italic;color:var(--rouge)}
-.drops-next-label{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:right}
-.drops-next-time{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--soft-black);text-align:right;margin-top:.3rem}
-.drops-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.drop-card{position:relative;overflow:hidden;border:1px solid var(--border-n);padding:2.5rem;cursor:pointer;transition:border-color .3s,transform .3s,box-shadow .3s;background:var(--cream)}
-.drop-card:hover{border-color:var(--rouge);transform:translateY(-4px);box-shadow:0 8px 32px rgba(139,26,26,.12)}
+.drops-grid{display:flex;flex-direction:column;gap:1.5rem}
+/* Featured drop */
+.drop-featured{background:var(--cream);border:1px solid var(--border-n);padding:3.5rem 2rem;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s,box-shadow .3s}
+.drop-featured:hover{border-color:var(--rouge);box-shadow:0 8px 32px rgba(139,26,26,.1)}
 .drop-color-bar{position:absolute;top:0;left:0;right:0;height:4px}
-.drop-status{font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--rouge);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.drop-status{font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--rouge);margin-bottom:1.2rem;display:inline-flex;align-items:center;gap:.5rem}
 .drop-status-dot{width:5px;height:5px;background:var(--rouge);border-radius:50%;animation:pulse 1.5s ease infinite}
-.drop-name{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--soft-black);margin-bottom:.35rem}
-.drop-subtitle{font-size:.78rem;color:var(--muted);margin-bottom:1.8rem}
-.drop-countdown{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--rouge);letter-spacing:.06em;line-height:1}
-.drop-countdown.live{color:var(--rouge-light)}
-.drop-countdown-label{font-size:.58rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.4rem;margin-bottom:1.8rem}
-.drop-teaser{display:flex;gap:.5rem;align-items:flex-end;margin-bottom:1.2rem}
-.drop-teaser-block{height:52px;border-radius:3px;opacity:.9}
-.drop-teaser-mystery{width:44px;height:52px;border:1px dashed rgba(28,20,16,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;color:rgba(28,20,16,.3)}
-.drop-cta-arrow{position:absolute;top:2rem;right:2rem;font-size:1.1rem;color:rgba(28,20,16,.18);transition:transform .3s,color .3s}
-.drop-card:hover .drop-cta-arrow{transform:translate(4px,-4px);color:var(--rouge)}
-.drop-notify{display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid var(--border-n);font-family:'Jost',sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.55rem .9rem;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.drop-featured-name{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(--soft-black);margin-bottom:.4rem}
+.drop-featured-sub{font-size:.78rem;color:var(--muted);margin-bottom:2.8rem}
+/* Big timer */
+.drop-timer{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:2.8rem}
+.drop-timer-unit{display:flex;flex-direction:column;align-items:center;gap:.5rem;min-width:68px}
+.drop-timer-val{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,6vw,5.5rem);font-weight:300;color:var(--rouge);line-height:1}
+.drop-timer-label{font-size:.54rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.drop-timer-sep{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,4rem);font-weight:300;color:var(--rouge);opacity:.28;margin-bottom:.8rem}
+/* Palette swatches */
+.drop-featured-palette{display:flex;align-items:center;justify-content:center;gap:.55rem;margin-bottom:2rem}
+.drop-swatch{width:22px;height:22px;border-radius:50%}
+.drop-palette-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:.4rem}
+.drop-notify{display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid var(--border-n);font-family:'Jost',sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.7rem 1.4rem;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
 .drop-notify:hover{background:var(--rouge);color:var(--cream);border-color:var(--rouge)}
 .drop-notify.notified{background:rgba(107,140,106,.1);border-color:rgba(107,140,106,.3);color:#6B8C6A;cursor:default}
+/* Upcoming mini drops */
+.drops-upcoming-wrap{display:flex;flex-direction:column;gap:.8rem}
+.drops-upcoming-title{font-size:.6rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:1rem;margin-bottom:.2rem}
+.drops-upcoming-title::before,.drops-upcoming-title::after{content:'';flex:1;height:1px;background:var(--border-n)}
+.drop-mini{background:var(--cream);border:1px solid var(--border-n);padding:1.4rem 2rem;cursor:pointer;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.drop-mini:hover{border-color:var(--rouge);box-shadow:0 4px 16px rgba(139,26,26,.08)}
+.drop-mini-content{display:flex;justify-content:space-between;align-items:center;gap:2rem}
+.drop-mini-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--soft-black);margin-bottom:.2rem}
+.drop-mini-sub{font-size:.72rem;color:var(--muted)}
+.drop-mini-right{text-align:right;flex-shrink:0}
+.drop-mini-countdown{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--soft-black)}
+.drop-mini-countdown-label{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.drop-mini-swatches{display:flex;gap:.35rem;margin-top:.9rem;align-items:center}
+.drop-swatch-sm{width:13px;height:13px;border-radius:50%}
 
 /* ATELIER */
 .atelier-section{display:grid;grid-template-columns:1fr 1fr;min-height:560px;overflow:hidden}
@@ -262,7 +281,8 @@ footer{background:var(--soft-black);color:var(--cream);padding:4rem 3.5rem 2rem}
   .testi-grid{grid-template-columns:1fr}
   .testi-card:nth-child(2){margin-top:0}
   .footer-grid{grid-template-columns:1fr 1fr}
-  .drops-grid{grid-template-columns:1fr}
+  .drop-timer{gap:.6rem}
+  .drop-timer-unit{min-width:52px}
 }
 @media(max-width:768px){
   nav{padding:1.2rem 1.5rem}
@@ -273,8 +293,12 @@ footer{background:var(--soft-black);color:var(--cream);padding:4rem 3.5rem 2rem}
   .slide-content{left:1.5rem;right:1.5rem;max-width:100%;top:auto;bottom:8rem;transform:none}
   .slide-piece{right:0;height:70vh;opacity:.35}
   .slider-arrow{width:40px;height:40px;font-size:.9rem}
-  .slider-arrow-prev{left:.8rem}
-  .slider-arrow-next{right:.8rem}
+  .slider-arrow-prev{left:.8rem;right:auto}
+  .slider-arrow-next{right:.8rem;left:auto}
+  .drop-featured{padding:2.5rem 1.5rem}
+  .drop-timer-sep{font-size:2rem}
+  .drop-mini-content{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .drop-mini-right{text-align:left}
   .slider-counter{left:1.5rem}
   .slider-label{display:none}
   .drops-section,.atelier-text,.pieces-section,.nl-section,.testi-section{padding-left:1.5rem;padding-right:1.5rem}
@@ -361,14 +385,8 @@ footer{background:var(--soft-black);color:var(--cream);padding:4rem 3.5rem 2rem}
 ═══════════════════════════════ -->
 <section class="drops-section" id="drops">
   <div class="drops-header reveal">
-    <div>
-      <div class="drops-eyebrow">Collections &agrave; venir</div>
-      <h2 class="drops-title">Prochains <em>drops</em></h2>
-    </div>
-    <div style="text-align:right;background:var(--cream);border:1px solid var(--border-n);padding:1rem 1.5rem;border-left:3px solid var(--rouge)">
-      <div class="drops-next-label">Prochain drop dans</div>
-      <div class="drops-next-time" id="nextDropTime">&mdash;</div>
-    </div>
+    <div class="drops-eyebrow">Collections &agrave; venir</div>
+    <h2 class="drops-title">Prochain <em>drop</em></h2>
   </div>
   <div class="drops-grid" id="dropsGrid"></div>
 </section>
@@ -631,22 +649,46 @@ function startAuto() {
 
 /* ── DROPS ── */
 function buildDrops() {
-  document.getElementById('dropsGrid').innerHTML = DROPS.map(d => `
-    <div class="drop-card reveal" onclick="go('catalogue.html')">
-      <div class="drop-color-bar" style="background:${d.bar}"></div>
+  const first = DROPS[0];
+  const rest = DROPS.slice(1);
+  document.getElementById('dropsGrid').innerHTML = `
+    <div class="drop-featured reveal" onclick="go('catalogue.html')">
+      <div class="drop-color-bar" style="background:${first.bar}"></div>
       <div class="drop-status"><span class="drop-status-dot"></span>Drop &agrave; venir &mdash; Non encore disponible</div>
-      <div class="drop-name">${d.name}</div>
-      <div class="drop-subtitle">${d.subtitle}</div>
-      <div class="drop-countdown" id="cd-${d.id}">—</div>
-      <div class="drop-countdown-label">Avant la mise en ligne</div>
-      <div class="drop-teaser">
-        ${d.colors.map(c=>`<div class="drop-teaser-block" style="width:${Math.floor(100/d.colors.length)-2}%;background:${c}"></div>`).join('')}
-        <div class="drop-teaser-mystery">?</div>
+      <div class="drop-featured-name">${first.name}</div>
+      <div class="drop-featured-sub">${first.subtitle}</div>
+      <div class="drop-timer">
+        <div class="drop-timer-unit"><span class="drop-timer-val" id="cd-d-${first.id}">--</span><span class="drop-timer-label">Jours</span></div>
+        <span class="drop-timer-sep">:</span>
+        <div class="drop-timer-unit"><span class="drop-timer-val" id="cd-h-${first.id}">--</span><span class="drop-timer-label">Heures</span></div>
+        <span class="drop-timer-sep">:</span>
+        <div class="drop-timer-unit"><span class="drop-timer-val" id="cd-m-${first.id}">--</span><span class="drop-timer-label">Min</span></div>
+        <span class="drop-timer-sep">:</span>
+        <div class="drop-timer-unit"><span class="drop-timer-val" id="cd-s-${first.id}">--</span><span class="drop-timer-label">Sec</span></div>
       </div>
-      <p style="font-size:.72rem;color:var(--muted);margin-bottom:1rem;letter-spacing:.04em">${d.nbPieces} pi&egrave;ces &mdash; palette ci-dessus</p>
-      <button class="drop-notify" id="notif-${d.id}" onclick="event.stopPropagation();activateNotif('${d.id}','${d.name}')">&#128276; Me pr&eacute;venir &agrave; la sortie</button>
-      <div class="drop-cta-arrow">&#8599;</div>
-    </div>`).join('');
+      <div class="drop-featured-palette">
+        ${first.colors.map(c=>`<div class="drop-swatch" style="background:${c}"></div>`).join('')}
+        <span class="drop-palette-label">${first.nbPieces} pi&egrave;ces &middot; palette couleurs</span>
+      </div>
+      <button class="drop-notify" id="notif-${first.id}" onclick="event.stopPropagation();activateNotif('${first.id}','${first.name}')">&#128276; Me pr&eacute;venir &agrave; la sortie</button>
+    </div>
+    ${rest.length ? `
+    <div class="drops-upcoming-wrap">
+      <div class="drops-upcoming-title">Aussi &agrave; venir</div>
+      ${rest.map(d=>`
+        <div class="drop-mini reveal" onclick="go('catalogue.html')">
+          <div class="drop-color-bar" style="background:${d.bar}"></div>
+          <div class="drop-mini-content">
+            <div><div class="drop-mini-name">${d.name}</div><div class="drop-mini-sub">${d.subtitle}</div></div>
+            <div class="drop-mini-right"><div class="drop-mini-countdown" id="cd-${d.id}">&mdash;</div><div class="drop-mini-countdown-label">avant la sortie</div></div>
+          </div>
+          <div class="drop-mini-swatches">
+            ${d.colors.map(c=>`<div class="drop-swatch-sm" style="background:${c}"></div>`).join('')}
+            <span style="font-size:.62rem;color:var(--muted);margin-left:.3rem">${d.nbPieces} pi&egrave;ces</span>
+          </div>
+        </div>`).join('')}
+    </div>` : ''}
+  `;
 }
 
 function activateNotif(id, name) {
@@ -692,16 +734,21 @@ function buildPieces() {
 
 /* ── COUNTDOWNS ── */
 function tick() {
-  let nextMs = Infinity;
-  DROPS.forEach(d => {
+  const first = DROPS[0];
+  const diff0 = first.date - Date.now();
+  if (diff0 > 0) {
+    const d = Math.floor(diff0/86400000), h = Math.floor((diff0%86400000)/3600000),
+          m = Math.floor((diff0%3600000)/60000), s = Math.floor((diff0%60000)/1000);
+    const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=String(v).padStart(2,'0'); };
+    set('cd-d-'+first.id, d); set('cd-h-'+first.id, h);
+    set('cd-m-'+first.id, m); set('cd-s-'+first.id, s);
+  }
+  DROPS.slice(1).forEach(d => {
     const el = document.getElementById('cd-'+d.id);
     if (!el) return;
     const diff = d.date - Date.now();
-    if (diff > 0) { el.textContent = fmt(diff); el.classList.remove('live'); if(diff<nextMs) nextMs=diff; }
-    else { el.textContent = 'Disponible !'; el.classList.add('live'); }
+    el.textContent = diff > 0 ? fmt(diff) : 'Disponible !';
   });
-  const n = document.getElementById('nextDropTime');
-  if (n && nextMs < Infinity) n.textContent = fmt(nextMs);
 }
 
 /* ── INIT ── */
