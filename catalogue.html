@@ -9,8 +9,11 @@
 .catalogue-layout { display: grid; grid-template-columns: 260px 1fr; gap: 3rem; padding: 2rem 4rem 5rem; margin-top: 90px; }
 
 /* SIDEBAR */
-.sidebar { position: sticky; top: 110px; align-self: start; height: calc(100vh - 130px); overflow-y: auto; scrollbar-width: none; }
-.sidebar::-webkit-scrollbar { display: none; }
+.sidebar { position: sticky; top: 110px; align-self: start; height: calc(100vh - 130px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--linen) transparent; padding-right: .6rem; }
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--linen); border-radius: 2px; }
+.sidebar::-webkit-scrollbar-thumb:hover { background: var(--earth); }
 .sidebar-section { margin-bottom: 2.2rem; padding-bottom: 2.2rem; border-bottom: 1px solid var(--border-neutral); }
 .sidebar-section:last-child { border-bottom: none; }
 .sidebar-title { font-size: .78rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
