@@ -19,7 +19,7 @@
 .breadcrumb span { color: var(--muted); opacity: .5; }
 
 /* GALLERY */
-.prod-gallery { position: sticky; top: 110px; flex: 1; min-width: 0; }
+.prod-gallery { flex: 1; min-width: 0; }
 .prod-info { flex: 1; min-width: 0; }
 .prod-main-img {
   aspect-ratio: 3/4; background: var(--warm);
@@ -101,7 +101,7 @@
 @media (max-width: 960px) {
   .prod-layout { padding: 2rem 1.5rem 4rem; margin-top: 76px; }
   .prod-columns { flex-direction: column; gap: 2.5rem; }
-  .prod-gallery { position: static; flex: none; width: 100%; }
+  .prod-gallery { flex: none; width: 100%; }
   .prod-info { flex: none; width: 100%; }
   .related-grid { grid-template-columns: repeat(2, 1fr); }
   .related-section { padding: 3rem 1.5rem 4rem; }
