@@ -117,7 +117,7 @@
 .active-filter-tag:hover { background: var(--rouge); color: var(--cream); }
 
 /* GRID */
-.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .prod-card { cursor: pointer; position: relative; transition: transform .3s ease; }
 .prod-card:hover { transform: translateY(-5px); }
 .prod-card:hover .prod-img-overlay { opacity: 1; }
@@ -125,6 +125,8 @@
 .prod-img-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 .prod-img-bg svg { width: 65%; height: 65%; }
 .prod-img-overlay { position: absolute; inset: 0; background: rgba(28,20,16,.42); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; opacity: 0; transition: opacity .3s; }
+.overlay-wish { position: absolute; top: .7rem; right: .7rem; background: rgba(250,247,242,.18); border: 1px solid rgba(250,247,242,.4); color: var(--cream); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .95rem; cursor: pointer; transition: background .2s; }
+.overlay-wish:hover, .overlay-wish.active { background: var(--rouge); border-color: var(--rouge); }
 .prod-badge { position: absolute; top: .7rem; left: .7rem; font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .22rem .65rem; }
 .badge-new { background: var(--soft-black); color: var(--cream); }
 .badge-rare { background: var(--rouge); color: var(--cream); }
@@ -370,6 +372,7 @@ function renderProducts() {
         <div class="prod-img-bg">${p.svg}</div>
         ${badges}
         <div class="prod-img-overlay">
+          <button class="overlay-wish" onclick="event.stopPropagation();this.classList.toggle('active')" title="Ajouter aux favoris">♡</button>
           <button onclick="event.stopPropagation();navigate('produit.html?id=${p.id}')" style="background:var(--cream);color:var(--soft-black);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">Voir</button>
           <button onclick="event.stopPropagation();Cart.add(${p.id})" style="background:var(--rouge);color:var(--cream);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">+ Panier</button>
         </div>
