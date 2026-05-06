@@ -192,9 +192,7 @@ nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
 .pieces-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:300;color:var(--soft-black)}
 .pieces-header h2 em{font-style:italic;color:var(--rouge)}
 .pieces-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
-.pieces-grid .pc:nth-child(2){margin-top:2.5rem}
-.pieces-grid .pc:nth-child(4){margin-top:1.5rem}
-.pc{cursor:pointer;position:relative;transition:transform .35s}
+.pc{cursor:pointer;position:relative;transition:transform .35s;display:flex;flex-direction:column}
 .pc:hover{transform:translateY(-6px)}
 .pc:hover .pc-overlay{opacity:1}
 .pc-img{aspect-ratio:3/4;position:relative;overflow:hidden;margin-bottom:.9rem}
@@ -205,7 +203,7 @@ nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
 .pc-badge-new{background:var(--soft-black);color:var(--cream);position:absolute;top:.75rem;right:.75rem;font-size:.56rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .65rem}
 .pc-cat{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
 .pc-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--soft-black);margin-bottom:.5rem;line-height:1.2}
-.pc-footer{display:flex;align-items:center;justify-content:space-between}
+.pc-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
 .pc-price{font-size:.88rem;font-weight:500;color:var(--soft-black)}
 .pc-unique{font-size:.6rem;color:var(--rouge);font-weight:500;letter-spacing:.06em}
 
@@ -224,12 +222,11 @@ nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
 /* TESTIMONIALS */
 .testi-section{padding:5rem 3.5rem;background:var(--warm)}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-.testi-card{border:1px solid var(--border-n);padding:1.8rem;background:var(--cream);transition:border-color .3s}
+.testi-card{border:1px solid var(--border-n);padding:1.8rem;background:var(--cream);transition:border-color .3s;display:flex;flex-direction:column}
 .testi-card:hover{border-color:var(--rouge)}
-.testi-card:nth-child(2){margin-top:1.5rem}
 .testi-stars{color:var(--rouge);font-size:.8rem;letter-spacing:.1em;margin-bottom:.9rem}
-.testi-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;line-height:1.65;color:var(--soft-black);margin-bottom:1.4rem}
-.testi-author{display:flex;align-items:center;gap:.7rem}
+.testi-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;line-height:1.65;color:var(--soft-black);margin-bottom:1.4rem;flex:1}
+.testi-author{display:flex;align-items:center;gap:.7rem;margin-top:auto}
 .testi-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:500;color:var(--cream)}
 .testi-name{font-size:.82rem;font-weight:500;color:var(--soft-black)}
 .testi-loc{font-size:.7rem;color:var(--muted)}
@@ -276,10 +273,8 @@ footer{background:var(--soft-black);color:var(--cream);padding:4rem 3.5rem 2rem}
   .atelier-section{grid-template-columns:1fr}
   .atelier-visual{min-height:280px}
   .pieces-grid{grid-template-columns:repeat(2,1fr)}
-  .pieces-grid .pc:nth-child(2),.pieces-grid .pc:nth-child(4){margin-top:0}
   .nl-section{grid-template-columns:1fr;gap:2rem}
   .testi-grid{grid-template-columns:1fr}
-  .testi-card:nth-child(2){margin-top:0}
   .footer-grid{grid-template-columns:1fr 1fr}
   .drop-timer{gap:.6rem}
   .drop-timer-unit{min-width:52px}
