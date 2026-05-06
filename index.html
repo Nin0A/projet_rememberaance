@@ -9,10 +9,10 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --rouge:#8B1A1A;--rouge-deep:#5C0F0F;--rouge-light:#C13535;--rouge-pale:#F7EFEF;
-  --cream:#FAF7F2;--warm:#F3EDE3;--linen:#E9E1D5;
-  --soft-black:#1C1410;--muted:#9A8F84;
-  --border:rgba(139,26,26,.13);--border-n:rgba(28,20,16,.09);
+  --rouge:#8B1A1A;--rouge-deep:#5C0F0F;--rouge-light:#C13535;--rouge-pale:#F9EEEE;
+  --cream:#FAF7F2;--warm:#F5EFE6;--linen:#EDE5DA;
+  --soft-black:#1A1210;--muted:#8A8078;
+  --border:rgba(139,26,26,.15);--border-n:rgba(28,20,16,.1);
   --terracotta:#C4622D;--sage:#6B8C6A;--mustard:#C8973A;--indigo:#3D4E7A;
 }
 html{scroll-behavior:smooth}
@@ -115,41 +115,40 @@ nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
 .slider-progress{position:absolute;bottom:0;left:0;height:2px;background:var(--rouge);z-index:10;transition:width 0s linear}
 
 /* MARQUEE */
-.marquee-wrap{overflow:hidden;background:var(--rouge);padding:.75rem 0}
+.marquee-wrap{overflow:hidden;background:var(--rouge);padding:.8rem 0}
 .marquee-track{display:flex;animation:marquee 22s linear infinite;white-space:nowrap}
-.marquee-item{display:inline-flex;align-items:center;gap:1.2rem;padding:0 2rem;font-size:.64rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,247,242,.75)}
-.marquee-sep{color:rgba(250,247,242,.3)}
+.marquee-item{display:inline-flex;align-items:center;gap:1.2rem;padding:0 2rem;font-size:.64rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,247,242,.92)}
+.marquee-sep{color:rgba(250,247,242,.45)}
 
 /* DROPS */
-.drops-section{background:var(--soft-black);padding:5rem 3.5rem;position:relative;overflow:hidden}
-.drops-section::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(139,26,26,.18),transparent 70%);pointer-events:none}
+.drops-section{background:var(--warm);padding:5rem 3.5rem;position:relative;overflow:hidden;border-top:4px solid var(--rouge)}
+.drops-section::before{content:'';position:absolute;top:-80px;right:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(139,26,26,.07),transparent 65%);pointer-events:none}
 .drops-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem}
-.drops-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,247,242,.3);display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
-.drops-eyebrow::before{content:'';width:24px;height:1px;background:rgba(250,247,242,.2)}
-.drops-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--cream)}
-.drops-title em{font-style:italic;color:var(--rouge-light)}
-.drops-next-label{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,247,242,.25);text-align:right}
-.drops-next-time{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--cream);text-align:right;margin-top:.3rem}
+.drops-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--rouge);display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
+.drops-eyebrow::before{content:'';width:24px;height:1px;background:var(--rouge)}
+.drops-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--soft-black)}
+.drops-title em{font-style:italic;color:var(--rouge)}
+.drops-next-label{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:right}
+.drops-next-time{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--soft-black);text-align:right;margin-top:.3rem}
 .drops-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.drop-card{position:relative;overflow:hidden;border:1px solid rgba(250,247,242,.07);padding:2.5rem;cursor:pointer;transition:border-color .3s,transform .3s;background:rgba(250,247,242,.02)}
-.drop-card:hover{border-color:rgba(250,247,242,.22);transform:translateY(-4px)}
-.drop-color-bar{position:absolute;top:0;left:0;right:0;height:3px}
-.drop-status{font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--rouge-light);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
-.drop-status-dot{width:5px;height:5px;background:var(--rouge-light);border-radius:50%;animation:pulse 1.5s ease infinite}
-.drop-name{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:300;color:var(--cream);margin-bottom:.35rem}
-.drop-subtitle{font-size:.78rem;color:rgba(250,247,242,.38);margin-bottom:1.8rem}
-.drop-countdown{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--cream);letter-spacing:.06em;line-height:1}
+.drop-card{position:relative;overflow:hidden;border:1px solid var(--border-n);padding:2.5rem;cursor:pointer;transition:border-color .3s,transform .3s,box-shadow .3s;background:var(--cream)}
+.drop-card:hover{border-color:var(--rouge);transform:translateY(-4px);box-shadow:0 8px 32px rgba(139,26,26,.12)}
+.drop-color-bar{position:absolute;top:0;left:0;right:0;height:4px}
+.drop-status{font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--rouge);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.drop-status-dot{width:5px;height:5px;background:var(--rouge);border-radius:50%;animation:pulse 1.5s ease infinite}
+.drop-name{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--soft-black);margin-bottom:.35rem}
+.drop-subtitle{font-size:.78rem;color:var(--muted);margin-bottom:1.8rem}
+.drop-countdown{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--rouge);letter-spacing:.06em;line-height:1}
 .drop-countdown.live{color:var(--rouge-light)}
-.drop-countdown-label{font-size:.58rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,247,242,.22);margin-top:.4rem;margin-bottom:1.8rem}
-/* Teaser visuel : blocs colorés sans révéler les pièces */
-.drop-teaser{display:flex;gap:.4rem;align-items:flex-end;margin-bottom:1.2rem}
-.drop-teaser-block{height:48px;border-radius:2px;opacity:.7}
-.drop-teaser-mystery{width:40px;height:48px;border:1px dashed rgba(250,247,242,.15);display:flex;align-items:center;justify-content:center;font-size:1rem;color:rgba(250,247,242,.2)}
-.drop-cta-arrow{position:absolute;top:2rem;right:2rem;font-size:1.1rem;color:rgba(250,247,242,.18);transition:transform .3s,color .3s}
-.drop-card:hover .drop-cta-arrow{transform:translate(4px,-4px);color:rgba(250,247,242,.5)}
-.drop-notify{display:inline-flex;align-items:center;gap:.5rem;background:rgba(250,247,242,.06);border:1px solid rgba(250,247,242,.1);font-family:'Jost',sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,247,242,.55);padding:.55rem .9rem;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.drop-countdown-label{font-size:.58rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.4rem;margin-bottom:1.8rem}
+.drop-teaser{display:flex;gap:.5rem;align-items:flex-end;margin-bottom:1.2rem}
+.drop-teaser-block{height:52px;border-radius:3px;opacity:.9}
+.drop-teaser-mystery{width:44px;height:52px;border:1px dashed rgba(28,20,16,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;color:rgba(28,20,16,.3)}
+.drop-cta-arrow{position:absolute;top:2rem;right:2rem;font-size:1.1rem;color:rgba(28,20,16,.18);transition:transform .3s,color .3s}
+.drop-card:hover .drop-cta-arrow{transform:translate(4px,-4px);color:var(--rouge)}
+.drop-notify{display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid var(--border-n);font-family:'Jost',sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.55rem .9rem;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
 .drop-notify:hover{background:var(--rouge);color:var(--cream);border-color:var(--rouge)}
-.drop-notify.notified{background:rgba(107,140,106,.15);border-color:rgba(107,140,106,.3);color:#6B8C6A;cursor:default}
+.drop-notify.notified{background:rgba(107,140,106,.1);border-color:rgba(107,140,106,.3);color:#6B8C6A;cursor:default}
 
 /* ATELIER */
 .atelier-section{display:grid;grid-template-columns:1fr 1fr;min-height:560px;overflow:hidden}
@@ -169,7 +168,7 @@ nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
 .process-mini-num{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--rouge);opacity:.5;min-width:18px}
 
 /* PIECES */
-.pieces-section{padding:5rem 3.5rem;background:var(--cream)}
+.pieces-section{padding:5rem 3.5rem;background:var(--cream);border-top:1px solid var(--border-n)}
 .pieces-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem}
 .pieces-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:300;color:var(--soft-black)}
 .pieces-header h2 em{font-style:italic;color:var(--rouge)}
@@ -366,7 +365,7 @@ footer{background:var(--soft-black);color:var(--cream);padding:4rem 3.5rem 2rem}
       <div class="drops-eyebrow">Collections &agrave; venir</div>
       <h2 class="drops-title">Prochains <em>drops</em></h2>
     </div>
-    <div>
+    <div style="text-align:right;background:var(--cream);border:1px solid var(--border-n);padding:1rem 1.5rem;border-left:3px solid var(--rouge)">
       <div class="drops-next-label">Prochain drop dans</div>
       <div class="drops-next-time" id="nextDropTime">&mdash;</div>
     </div>
@@ -644,7 +643,7 @@ function buildDrops() {
         ${d.colors.map(c=>`<div class="drop-teaser-block" style="width:${Math.floor(100/d.colors.length)-2}%;background:${c}"></div>`).join('')}
         <div class="drop-teaser-mystery">?</div>
       </div>
-      <p style="font-size:.75rem;color:rgba(250,247,242,.3);margin-bottom:1rem">${d.nbPieces} pi&egrave;ces &mdash; palette de couleurs ci-dessus</p>
+      <p style="font-size:.72rem;color:var(--muted);margin-bottom:1rem;letter-spacing:.04em">${d.nbPieces} pi&egrave;ces &mdash; palette ci-dessus</p>
       <button class="drop-notify" id="notif-${d.id}" onclick="event.stopPropagation();activateNotif('${d.id}','${d.name}')">&#128276; Me pr&eacute;venir &agrave; la sortie</button>
       <div class="drop-cta-arrow">&#8599;</div>
     </div>`).join('');
@@ -676,8 +675,8 @@ function buildAtelier() {
 function buildPieces() {
   document.getElementById('piecesGrid').innerHTML = SLIDES.slice(0,4).map(p=>`
     <div class="pc" onclick="go('produit.html?id=${p.id}')">
-      <div class="pc-img" style="background:${p.bg}20;border:1px solid ${p.bg}40">
-        <div class="pc-bg" style="background:${p.bg}15">${p.svg}</div>
+      <div class="pc-img" style="background:${p.bg}35;border:1px solid ${p.bg}55">
+        <div class="pc-bg" style="background:${p.bg}20">${p.svg}</div>
         <div class="pc-badge">Unique</div>
         ${p.tags.includes('new')?'<div class="pc-badge-new">New</div>':''}
         <div class="pc-overlay">
