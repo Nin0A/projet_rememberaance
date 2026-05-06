@@ -274,32 +274,6 @@ function navigate(page) {
 
 // ─── SHARED INIT ────────────────────────────────────────
 function initShared() {
-  // Cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  const cursorText = document.getElementById('cursorText');
-  if (!cursor) return;
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx+'px'; cursor.style.top = my+'px';
-  });
-  (function followRing(){
-    rx += (mx-rx)*.1; ry += (my-ry)*.1;
-    ring.style.left = rx+'px'; ring.style.top = ry+'px';
-    if(cursorText){ cursorText.style.left = rx+'px'; cursorText.style.top = ry+'px'; }
-    requestAnimationFrame(followRing);
-  })();
-
-  document.querySelectorAll('[data-cursor]').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if(cursorText){ cursorText.textContent = el.dataset.cursor; cursorText.classList.add('show'); }
-    });
-    el.addEventListener('mouseleave', () => {
-      if(cursorText){ cursorText.classList.remove('show'); }
-    });
-  });
-
   // Nav scroll
   const nav = document.getElementById('navbar');
   if (nav) {

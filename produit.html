@@ -7,17 +7,20 @@
 <link rel="stylesheet" href="style.css">
 <style>
 .prod-layout {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5rem; padding: 3rem 4rem 6rem;
+  padding: 3rem 4rem 6rem;
   margin-top: 90px; max-width: 1280px; margin-left: auto; margin-right: auto;
 }
-.breadcrumb { grid-column: 1/-1; font-size: .7rem; color: var(--muted); letter-spacing: .06em; display: flex; align-items: center; gap: .6rem; }
+.prod-columns {
+  display: flex; align-items: flex-start; gap: 5rem;
+}
+.breadcrumb { font-size: .7rem; color: var(--muted); letter-spacing: .06em; display: flex; align-items: center; gap: .6rem; margin-bottom: 2rem; }
 .breadcrumb a { color: var(--muted); text-decoration: none; transition: color .2s; }
 .breadcrumb a:hover { color: var(--rouge); }
 .breadcrumb span { color: var(--muted); opacity: .5; }
 
 /* GALLERY */
-.prod-gallery { position: sticky; top: 110px; align-self: start; }
+.prod-gallery { flex: 1; min-width: 0; }
+.prod-info { flex: 1; min-width: 0; }
 .prod-main-img {
   aspect-ratio: 3/4; background: var(--warm);
   display: flex; align-items: center; justify-content: center;
@@ -30,14 +33,14 @@
 .prod-thumb.active { border-color: var(--rouge); }
 .prod-thumb:hover { border-color: var(--rouge-light); }
 .prod-thumb svg { width: 72%; height: 72%; }
-.prod-condition-badge { position: absolute; top: 1rem; left: 1rem; background: var(--white); border: 1px solid var(--border-neutral); font-size: .62rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .8rem; color: var(--soft-black); }
+.prod-condition-badge { position: absolute; top: 1rem; left: 1rem; background: var(--white); border: 1px solid var(--border-neutral); font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .8rem; color: var(--soft-black); }
 
 /* INFOS */
 .prod-info {}
 .prod-top-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-.prod-category { font-size: .65rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--rouge); }
+.prod-category { font-size: .8rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--rouge); }
 .prod-badges { display: flex; gap: .4rem; }
-.prod-badge-tag { font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .65rem; }
+.prod-badge-tag { font-size: .76rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .65rem; }
 .prod-h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--soft-black); line-height: 1.1; margin-bottom: 1.2rem; }
 .prod-prices { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .8rem; }
 .prod-price-main { font-size: 1.8rem; font-weight: 500; color: var(--soft-black); }
@@ -51,7 +54,7 @@
 /* Details grid */
 .prod-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1.8rem; }
 .detail-item { background: var(--warm); padding: .8rem 1rem; }
-.detail-label { font-size: .6rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.detail-label { font-size: .76rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
 .detail-val { font-size: .88rem; color: var(--soft-black); font-weight: 500; }
 
 /* CTA */
@@ -61,7 +64,7 @@
 
 /* Care */
 .prod-care { margin-bottom: 1.8rem; }
-.prod-care-title { font-size: .65rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
+.prod-care-title { font-size: .8rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
 .prod-care-list { list-style: none; }
 .prod-care-list li { font-size: .82rem; color: var(--muted); padding: .35rem 0; border-bottom: 1px solid var(--border-neutral); display: flex; align-items: center; gap: .6rem; }
 .prod-care-list li::before { content: '—'; color: var(--rouge); opacity: .5; }
@@ -96,8 +99,10 @@
 .accordion-body-inner { padding: 0 0 1rem; font-size: .82rem; line-height: 1.75; color: var(--muted); }
 
 @media (max-width: 960px) {
-  .prod-layout { grid-template-columns: 1fr; gap: 2.5rem; padding: 2rem 1.5rem 4rem; margin-top: 76px; }
-  .prod-gallery { position: static; }
+  .prod-layout { padding: 2rem 1.5rem 4rem; margin-top: 76px; }
+  .prod-columns { flex-direction: column; gap: 2.5rem; }
+  .prod-gallery { flex: none; width: 100%; }
+  .prod-info { flex: none; width: 100%; }
   .related-grid { grid-template-columns: repeat(2, 1fr); }
   .related-section { padding: 3rem 1.5rem 4rem; }
 }
@@ -109,9 +114,6 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="cursor-text" id="cursorText"></div>
 <div class="page-overlay" id="pageOverlay"><div class="overlay-logo">Remembrance</div></div>
 
 <nav id="navbar" class="scrolled">
@@ -135,8 +137,10 @@
     <a href="catalogue.html" data-nav>Catalogue</a><span>/</span>
     <span id="breadcrumbName">Produit</span>
   </div>
-  <div class="prod-gallery" id="prodGallery"></div>
-  <div class="prod-info" id="prodInfo"></div>
+  <div class="prod-columns">
+    <div class="prod-gallery" id="prodGallery"></div>
+    <div class="prod-info" id="prodInfo"></div>
+  </div>
 </div>
 
 <section class="related-section">
@@ -185,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('prodGallery').innerHTML = `
     <div class="prod-main-img reveal-left" style="background:${p.bg}">
       <div class="prod-main-img-inner">${p.svg}</div>
-      <div class="prod-condition-badge">${p.condition}</div>
     </div>
     <div class="prod-thumbs">
       ${thumbBgs.map((bg, i) => `
@@ -217,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
     <p class="prod-desc reveal">${p.desc}</p>
     <div class="prod-details-grid reveal">
       <div class="detail-item"><div class="detail-label">Taille</div><div class="detail-val">${p.size}</div></div>
-      <div class="detail-item"><div class="detail-label">État</div><div class="detail-val">${p.condition}</div></div>
       <div class="detail-item"><div class="detail-label">Catégorie</div><div class="detail-val">${p.subcategory}</div></div>
       <div class="detail-item"><div class="detail-label">Couleur</div><div class="detail-val" style="display:flex;align-items:center;gap:.5rem;"><span style="width:14px;height:14px;background:${p.colorHex};border-radius:50%;display:inline-block;border:1px solid var(--border-neutral)"></span>${p.color}</div></div>
     </div>
@@ -268,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
       <div class="prod-name">${r.name}</div>
-      <div class="prod-sub">T.${r.size} · ${r.condition}</div>
+      <div class="prod-sub">T.${r.size}</div>
       <div class="prod-rprice">${r.price} €</div>
     </div>`).join('');
 });

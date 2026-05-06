@@ -45,42 +45,6 @@
       background: var(--cream);
       color: var(--soft-black);
       overflow-x: hidden;
-      cursor: none
-    }
-
-    /* CURSOR */
-    .cursor {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      background: var(--rouge);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform .1s
-    }
-
-    .cursor-ring {
-      position: fixed;
-      width: 32px;
-      height: 32px;
-      border: 1px solid rgba(139, 26, 26, .4);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%)
-    }
-
-    @media(max-width:540px) {
-      body {
-        cursor: auto
-      }
-
-      .cursor,
-      .cursor-ring {
-        display: none
-      }
     }
 
     /* PAGE OVERLAY */
@@ -182,7 +146,7 @@
 
     .nav-links a {
       text-decoration: none;
-      font-size: .7rem;
+      font-size: .76rem;
       font-weight: 500;
       letter-spacing: .16em;
       text-transform: uppercase;
@@ -235,7 +199,7 @@
       background: none;
       border: none;
       font-family: 'Jost', sans-serif;
-      font-size: .7rem;
+      font-size: .76rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -264,7 +228,7 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      font-size: .55rem;
+      font-size: .72rem;
       display: flex;
       align-items: center;
       justify-content: center
@@ -343,7 +307,8 @@
     /* Illustration de la pièce, côté droit */
     .slide-piece {
       position: absolute;
-      right: 8%;
+      left: 46%;
+      right: 0;
       bottom: 0;
       height: 88vh;
       display: flex;
@@ -354,7 +319,7 @@
     .slide-piece svg {
       height: 100%;
       width: auto;
-      max-width: 45vw;
+      max-width: 100%;
       filter: drop-shadow(0 0 60px rgba(28, 20, 16, .4))
     }
 
@@ -369,7 +334,7 @@
     }
 
     .slide-num {
-      font-size: .6rem;
+      font-size: .74rem;
       font-weight: 500;
       letter-spacing: .2em;
       text-transform: uppercase;
@@ -391,7 +356,7 @@
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      font-size: .62rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -429,7 +394,7 @@
     }
 
     .slide-meta-label {
-      font-size: .58rem;
+      font-size: .76rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -462,7 +427,7 @@
       background: var(--rouge);
       color: var(--cream);
       text-decoration: none;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -484,7 +449,7 @@
       background: transparent;
       border: 1px solid rgba(250, 247, 242, .5);
       font-family: 'Jost', sans-serif;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 400;
       letter-spacing: .16em;
       text-transform: uppercase;
@@ -535,12 +500,12 @@
     @media(min-width:1100px) {
       .slider-arrow-prev {
         left: auto;
-        right: calc(43vw + 1.5rem)
+        right: calc(54vw + 1.5rem)
       }
 
       .slider-arrow-next {
         left: auto;
-        right: 5%
+        right: 1.8rem
       }
     }
 
@@ -576,7 +541,7 @@
       bottom: 2.5rem;
       left: 3.5rem;
       z-index: 10;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 500;
       letter-spacing: .12em;
       color: rgba(250, 247, 242, .35);
@@ -598,7 +563,7 @@
       bottom: 2.5rem;
       right: 3.5rem;
       z-index: 10;
-      font-size: .6rem;
+      font-size: .72rem;
       letter-spacing: .16em;
       text-transform: uppercase;
       color: rgba(250, 247, 242, .25)
@@ -618,7 +583,7 @@
     /* MARQUEE */
     .marquee-wrap {
       overflow: hidden;
-      background: var(--rouge);
+      background: var(--soft-black);
       padding: .8rem 0
     }
 
@@ -633,7 +598,7 @@
       align-items: center;
       gap: 1.2rem;
       padding: 0 2rem;
-      font-size: .64rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -641,16 +606,16 @@
     }
 
     .marquee-sep {
-      color: rgba(250, 247, 242, .45)
+      color: rgba(250, 247, 242, .3)
     }
 
     /* DROPS */
     .drops-section {
-      background: var(--warm);
-      padding: 5rem 3.5rem;
+      background: var(--cream);
+      padding: 5rem 4rem;
       position: relative;
       overflow: hidden;
-      border-top: 4px solid var(--rouge)
+      border-top: 1px solid var(--border-n)
     }
 
     .drops-section::before {
@@ -670,7 +635,7 @@
     }
 
     .drops-eyebrow {
-      font-size: .62rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .2em;
       text-transform: uppercase;
@@ -732,7 +697,7 @@
     }
 
     .drop-status {
-      font-size: .6rem;
+      font-size: .72rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -791,7 +756,7 @@
     }
 
     .drop-timer-label {
-      font-size: .54rem;
+      font-size: .72rem;
       font-weight: 500;
       letter-spacing: .22em;
       text-transform: uppercase;
@@ -823,7 +788,7 @@
     }
 
     .drop-palette-label {
-      font-size: .62rem;
+      font-size: .78rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--muted);
@@ -837,7 +802,7 @@
       background: transparent;
       border: 1px solid var(--border-n);
       font-family: 'Jost', sans-serif;
-      font-size: .66rem;
+      font-size: .8rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -868,7 +833,7 @@
     }
 
     .drops-upcoming-title {
-      font-size: .6rem;
+      font-size: .72rem;
       font-weight: 500;
       letter-spacing: .2em;
       text-transform: uppercase;
@@ -935,7 +900,7 @@
     }
 
     .drop-mini-countdown-label {
-      font-size: .56rem;
+      font-size: .74rem;
       letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--muted)
@@ -999,7 +964,7 @@
       display: block;
       font-style: normal;
       font-family: 'Jost', sans-serif;
-      font-size: .6rem;
+      font-size: .74rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--muted);
@@ -1015,7 +980,7 @@
     }
 
     .section-eyebrow {
-      font-size: .62rem;
+      font-size: .78rem;
       font-weight: 500;
       letter-spacing: .2em;
       text-transform: uppercase;
@@ -1081,9 +1046,8 @@
 
     /* PIECES */
     .pieces-section {
-      padding: 5rem 3.5rem;
-      background: var(--cream);
-      border-top: 1px solid var(--border-n)
+      padding: 5rem 4rem;
+      background: var(--warm)
     }
 
     .pieces-header {
@@ -1108,21 +1072,16 @@
     .pieces-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.2rem
-    }
-
-    .pieces-grid .pc:nth-child(2) {
-      margin-top: 2.5rem
-    }
-
-    .pieces-grid .pc:nth-child(4) {
-      margin-top: 1.5rem
+      gap: 1.2rem;
+      align-items: start
     }
 
     .pc {
       cursor: pointer;
       position: relative;
-      transition: transform .35s
+      transition: transform .35s;
+      display: flex;
+      flex-direction: column
     }
 
     .pc:hover {
@@ -1170,7 +1129,7 @@
       position: absolute;
       top: .75rem;
       left: .75rem;
-      font-size: .56rem;
+      font-size: .74rem;
       font-weight: 500;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -1185,7 +1144,7 @@
       position: absolute;
       top: .75rem;
       right: .75rem;
-      font-size: .56rem;
+      font-size: .74rem;
       font-weight: 500;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -1193,7 +1152,7 @@
     }
 
     .pc-cat {
-      font-size: .6rem;
+      font-size: .76rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -1213,7 +1172,8 @@
     .pc-footer {
       display: flex;
       align-items: center;
-      justify-content: space-between
+      justify-content: space-between;
+      margin-top: auto
     }
 
     .pc-price {
@@ -1223,7 +1183,7 @@
     }
 
     .pc-unique {
-      font-size: .6rem;
+      font-size: .74rem;
       color: var(--rouge);
       font-weight: 500;
       letter-spacing: .06em
@@ -1234,7 +1194,7 @@
       background: var(--rouge-pale);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 4.5rem 3.5rem;
+      padding: 4.5rem 4rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
@@ -1289,7 +1249,7 @@
       border: none;
       padding: .85rem 1.3rem;
       font-family: 'Jost', sans-serif;
-      font-size: .68rem;
+      font-size: .82rem;
       font-weight: 500;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -1303,37 +1263,36 @@
     }
 
     .nl-hint {
-      font-size: .68rem;
+      font-size: .82rem;
       color: var(--muted);
       margin-top: .7rem
     }
 
     /* TESTIMONIALS */
     .testi-section {
-      padding: 5rem 3.5rem;
-      background: var(--warm)
+      padding: 5rem 4rem;
+      background: var(--cream)
     }
 
     .testi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
-      margin-top: 3rem
+      margin-top: 3rem;
+      align-items: start
     }
 
     .testi-card {
       border: 1px solid var(--border-n);
       padding: 1.8rem;
-      background: var(--cream);
-      transition: border-color .3s
+      background: var(--warm);
+      transition: border-color .3s;
+      display: flex;
+      flex-direction: column
     }
 
     .testi-card:hover {
       border-color: var(--rouge)
-    }
-
-    .testi-card:nth-child(2) {
-      margin-top: 1.5rem
     }
 
     .testi-stars {
@@ -1355,7 +1314,8 @@
     .testi-author {
       display: flex;
       align-items: center;
-      gap: .7rem
+      gap: .7rem;
+      margin-top: auto
     }
 
     .testi-av {
@@ -1377,12 +1337,12 @@
     }
 
     .testi-loc {
-      font-size: .7rem;
+      font-size: .76rem;
       color: var(--muted)
     }
 
     .testi-piece {
-      font-size: .68rem;
+      font-size: .82rem;
       color: var(--rouge);
       font-style: italic;
       margin-top: .1rem
@@ -1392,7 +1352,7 @@
     footer {
       background: var(--soft-black);
       color: var(--cream);
-      padding: 4rem 3.5rem 2rem
+      padding: 4rem 4rem 2rem
     }
 
     .footer-grid {
@@ -1431,7 +1391,7 @@
     }
 
     .footer-col h4 {
-      font-size: .6rem;
+      font-size: .72rem;
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -1464,7 +1424,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: .65rem;
+      font-size: .8rem;
       color: rgba(250, 247, 242, .2)
     }
 
@@ -1474,7 +1434,7 @@
     }
 
     .footer-socials a {
-      font-size: .65rem;
+      font-size: .8rem;
       letter-spacing: .12em;
       text-transform: uppercase;
       color: rgba(250, 247, 242, .28);
@@ -1614,11 +1574,6 @@
         grid-template-columns: repeat(2, 1fr)
       }
 
-      .pieces-grid .pc:nth-child(2),
-      .pieces-grid .pc:nth-child(4) {
-        margin-top: 0
-      }
-
       .nl-section {
         grid-template-columns: 1fr;
         gap: 2rem
@@ -1626,10 +1581,6 @@
 
       .testi-grid {
         grid-template-columns: 1fr
-      }
-
-      .testi-card:nth-child(2) {
-        margin-top: 0
       }
 
       .footer-grid {
@@ -1666,36 +1617,88 @@
         display: flex
       }
 
+      /* Mobile hero : zones sans chevauchement */
+      .slide-overlay {
+        background: linear-gradient(to top, rgba(28, 20, 16, .98) 0%, rgba(28, 20, 16, .7) 38%, rgba(28, 20, 16, .0) 60%)
+      }
+
+      /* Vêtement : haut de l'écran, bien visible */
+      .slide-piece {
+        left: 0;
+        right: 0;
+        top: 4.5rem;
+        bottom: auto;
+        height: 52vh;
+        opacity: 1;
+        align-items: flex-start;
+        justify-content: center
+      }
+
+      .slide-piece svg {
+        height: 100%;
+        max-width: 65vw
+      }
+
+      /* Texte : zone basse, pas de chevauchement avec le vêtement */
       .slide-content {
         left: 1.5rem;
         right: 1.5rem;
         max-width: 100%;
-        top: auto;
-        bottom: 8rem;
-        transform: none
+        top: 52vh;
+        bottom: auto;
+        transform: none;
+        text-align: center
       }
 
-      .slide-piece {
-        right: 0;
-        height: 70vh;
-        opacity: .35
+      .slide-num { display: none }
+
+      .slide-meta { display: none }
+
+      .slide-name {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
+        margin-bottom: .8rem
       }
 
+      .slide-price { font-size: 1.5rem }
+
+      .slide-ctas {
+        justify-content: center;
+        margin-top: 1rem !important
+      }
+
+      .btn-slide-primary,
+      .btn-slide-ghost {
+        font-size: .74rem;
+        padding: .75rem 1.3rem
+      }
+
+      /* Flèches : au niveau du vêtement */
       .slider-arrow {
-        width: 40px;
-        height: 40px;
-        font-size: .9rem
+        width: 38px;
+        height: 38px;
+        font-size: .85rem;
+        top: calc(4.5rem + 26vh);
+        bottom: auto;
+        transform: translateY(-50%)
       }
 
       .slider-arrow-prev {
-        left: .8rem;
+        left: 1rem;
         right: auto
       }
 
       .slider-arrow-next {
-        right: .8rem;
+        right: 1rem;
         left: auto
       }
+
+      /* Dots : centrés en bas */
+      .slider-dots {
+        bottom: 1.8rem
+      }
+
+      /* Compteur : masqué en mobile */
+      .slider-counter { display: none }
 
       .drop-featured {
         padding: 2.5rem 1.5rem
@@ -1713,10 +1716,6 @@
 
       .drop-mini-right {
         text-align: left
-      }
-
-      .slider-counter {
-        left: 1.5rem
       }
 
       .slider-label {
@@ -1765,8 +1764,6 @@
 
 <body>
 
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
   <div class="page-overlay" id="pageOverlay">
     <div class="overlay-wordmark">Rememberaance</div>
   </div>
@@ -1805,7 +1802,6 @@
     <!-- Compteur bas gauche -->
     <div class="slider-counter">
       <span class="slider-counter-current" id="counterCurrent">1</span>
-      <span>/ 5</span>
     </div>
 
     <!-- Label bas droit -->
@@ -1874,9 +1870,7 @@
         <div class="process-mini-row"><span class="process-mini-num">04</span>Une pi&egrave;ce unique &mdash; pour vous
         </div>
       </div>
-      <a href="catalogue.html" class="btn-slide-primary"
-        style="width:fit-content;background:var(--soft-black);color:var(--cream);text-decoration:none;font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:.95rem 2rem;display:inline-flex;align-items:center;gap:.5rem;transition:background .3s">Voir
-        toutes les cr&eacute;ations &rarr;</a>
+      <a href="catalogue.html" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--soft-black);color:var(--cream);text-decoration:none;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:.95rem 2rem;transition:background .3s;border:1px solid var(--soft-black)" onmouseover="this.style.background='var(--rouge)';this.style.borderColor='var(--rouge)'" onmouseout="this.style.background='var(--soft-black)';this.style.borderColor='var(--soft-black)'">Voir toutes les cr&eacute;ations &rarr;</a>
     </div>
   </div>
 
@@ -1887,10 +1881,7 @@
         <div class="section-eyebrow">S&eacute;lection du moment</div>
         <h2>Pi&egrave;ces <em>disponibles</em></h2>
       </div>
-      <a href="catalogue.html"
-        style="background:none;border:none;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s"
-        onmouseover="this.style.color='var(--rouge)';this.style.borderColor='var(--rouge)'"
-        onmouseout="this.style.color='var(--muted)';this.style.borderColor='transparent'">Tout voir &rarr;</a>
+      <a href="catalogue.html" style="font-family:'Jost',sans-serif;font-size:.76rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s" onmouseover="this.style.color='var(--rouge)';this.style.borderColor='var(--rouge)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='transparent'">Tout voir &rarr;</a>
     </div>
     <div class="pieces-grid" id="piecesGrid"></div>
   </section>
@@ -2257,8 +2248,8 @@
         <div class="pc-badge">Unique</div>
         ${p.tags.includes('new') ? '<div class="pc-badge-new">New</div>' : ''}
         <div class="pc-overlay">
-          <button class="btn-slide-primary" style="font-size:.65rem;padding:.6rem 1.1rem" onclick="event.stopPropagation();Cart.add(${p.id})">+ Panier</button>
-          <button style="background:rgba(250,247,242,.1);border:1px solid rgba(250,247,242,.2);font-family:'Jost',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,247,242,.75);cursor:pointer;padding:.5rem .9rem" onclick="event.stopPropagation();go('produit.html?id=${p.id}')">Voir →</button>
+          <button onclick="event.stopPropagation();go('produit.html?id=${p.id}')" style="background:var(--cream);color:var(--soft-black);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">Voir</button>
+          <button onclick="event.stopPropagation();Cart.add(${p.id})" style="background:var(--rouge);color:var(--cream);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">+ Panier</button>
         </div>
       </div>
       <div class="pc-cat">${p.cat} · T.${p.size}</div>
@@ -2289,12 +2280,6 @@
     /* ── INIT ── */
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => document.getElementById('pageOverlay').classList.add('gone'), 480);
-
-      // Cursor
-      const cur = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
-      let mx = 0, my = 0, rx = 0, ry = 0;
-      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx + 'px'; cur.style.top = my + 'px'; });
-      (function fr() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(fr); })();
 
       // Nav on/off slider
       const nav = document.getElementById('navbar');
