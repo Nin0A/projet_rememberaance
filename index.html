@@ -1617,20 +1617,37 @@
         display: flex
       }
 
+      .slide-overlay {
+        background: linear-gradient(to top, rgba(28, 20, 16, .92) 0%, rgba(28, 20, 16, .55) 35%, rgba(28, 20, 16, .0) 65%)
+      }
+
+      .slide-piece {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: auto;
+        height: 60vh;
+        opacity: 1;
+        align-items: flex-start
+      }
+
+      .slide-piece svg {
+        height: 100%;
+        max-width: 70vw
+      }
+
       .slide-content {
         left: 1.5rem;
         right: 1.5rem;
         max-width: 100%;
         top: auto;
-        bottom: 8rem;
-        transform: none
+        bottom: 5rem;
+        transform: none;
+        text-align: center
       }
 
-      .slide-piece {
-        left: auto;
-        right: 0;
-        height: 70vh;
-        opacity: .35
+      .slide-content .slide-cta {
+        justify-content: center
       }
 
       .slider-arrow {
