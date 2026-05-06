@@ -1617,54 +1617,88 @@
         display: flex
       }
 
+      /* Mobile hero : zones sans chevauchement */
       .slide-overlay {
-        background: linear-gradient(to top, rgba(28, 20, 16, .92) 0%, rgba(28, 20, 16, .55) 35%, rgba(28, 20, 16, .0) 65%)
+        background: linear-gradient(to top, rgba(28, 20, 16, .98) 0%, rgba(28, 20, 16, .7) 38%, rgba(28, 20, 16, .0) 60%)
       }
 
+      /* Vêtement : haut de l'écran, bien visible */
       .slide-piece {
         left: 0;
         right: 0;
         top: 0;
         bottom: auto;
-        height: 60vh;
+        height: 55vh;
         opacity: 1;
-        align-items: flex-start
+        align-items: flex-start;
+        justify-content: center
       }
 
       .slide-piece svg {
         height: 100%;
-        max-width: 70vw
+        max-width: 65vw
       }
 
+      /* Texte : zone basse, pas de chevauchement avec le vêtement */
       .slide-content {
         left: 1.5rem;
         right: 1.5rem;
         max-width: 100%;
-        top: auto;
-        bottom: 5rem;
+        top: 52vh;
+        bottom: auto;
         transform: none;
         text-align: center
       }
 
-      .slide-content .slide-cta {
-        justify-content: center
+      .slide-num { display: none }
+
+      .slide-meta { display: none }
+
+      .slide-name {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
+        margin-bottom: .8rem
       }
 
+      .slide-price { font-size: 1.5rem }
+
+      .slide-ctas {
+        justify-content: center;
+        margin-top: 1rem !important
+      }
+
+      .btn-slide-primary,
+      .btn-slide-ghost {
+        font-size: .74rem;
+        padding: .75rem 1.3rem
+      }
+
+      /* Flèches : en bas, flanquant les dots */
       .slider-arrow {
-        width: 40px;
-        height: 40px;
-        font-size: .9rem
+        width: 38px;
+        height: 38px;
+        font-size: .85rem;
+        top: auto;
+        bottom: 1.4rem;
+        transform: none
       }
 
       .slider-arrow-prev {
-        left: .8rem;
+        left: 1.5rem;
         right: auto
       }
 
       .slider-arrow-next {
-        right: .8rem;
+        right: 1.5rem;
         left: auto
       }
+
+      /* Dots : centrés en bas */
+      .slider-dots {
+        bottom: 1.8rem
+      }
+
+      /* Compteur : masqué en mobile */
+      .slider-counter { display: none }
 
       .drop-featured {
         padding: 2.5rem 1.5rem
@@ -1682,10 +1716,6 @@
 
       .drop-mini-right {
         text-align: left
-      }
-
-      .slider-counter {
-        left: 1.5rem
       }
 
       .slider-label {
