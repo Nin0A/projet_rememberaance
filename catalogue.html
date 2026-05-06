@@ -98,7 +98,6 @@
   .cat-hero { padding: 3.5rem 1.5rem 1.5rem; }
 }
 
-.prod-card:hover .prod-img-overlay { opacity: 0; }
 </style>
 </head>
 <body>
@@ -286,6 +285,10 @@ function renderProducts() {
       <div class="prod-img" style="background:${p.bg}">
         <div class="prod-img-bg">${p.svg}</div>
         ${badges}
+        <div class="prod-img-overlay">
+          <button onclick="event.stopPropagation();navigate('produit.html?id=${p.id}')" style="background:var(--cream);color:var(--soft-black);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">Voir</button>
+          <button onclick="event.stopPropagation();Cart.add(${p.id})" style="background:var(--rouge);color:var(--cream);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">+ Panier</button>
+        </div>
       </div>
       <div class="prod-cat">${p.subcategory} · T.${p.size}</div>
       <div class="prod-name">${p.name}</div>

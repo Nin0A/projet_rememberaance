@@ -2204,6 +2204,10 @@
         <div class="pc-bg" style="background:${p.bg}20">${p.svg}</div>
         <div class="pc-badge">Unique</div>
         ${p.tags.includes('new') ? '<div class="pc-badge-new">New</div>' : ''}
+        <div class="pc-overlay">
+          <button onclick="event.stopPropagation();go('produit.html?id=${p.id}')" style="background:var(--cream);color:var(--soft-black);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">Voir</button>
+          <button onclick="event.stopPropagation();Cart.add(${p.id})" style="background:var(--rouge);color:var(--cream);border:none;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.4rem;cursor:pointer;transition:background .2s">+ Panier</button>
+        </div>
       </div>
       <div class="pc-cat">${p.cat} · T.${p.size}</div>
       <div class="pc-name">${p.name}</div>
