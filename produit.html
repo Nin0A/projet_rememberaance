@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produit — Remembrance</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.prod-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; padding: 3rem 4rem 6rem;
+  margin-top: 90px; max-width: 1280px; margin-left: auto; margin-right: auto;
+}
+.breadcrumb { grid-column: 1/-1; font-size: .7rem; color: var(--muted); letter-spacing: .06em; display: flex; align-items: center; gap: .6rem; }
+.breadcrumb a { color: var(--muted); text-decoration: none; transition: color .2s; }
+.breadcrumb a:hover { color: var(--rouge); }
+.breadcrumb span { color: var(--muted); opacity: .5; }
+
+/* GALLERY */
+.prod-gallery { position: sticky; top: 110px; align-self: start; }
+.prod-main-img {
+  aspect-ratio: 3/4; background: var(--warm);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; margin-bottom: 1rem;
+}
+.prod-main-img svg { width: 55%; height: 55%; }
+.prod-main-img-inner { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.prod-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; }
+.prod-thumb { aspect-ratio: 1; cursor: pointer; border: 1.5px solid transparent; transition: border-color .2s; display: flex; align-items: center; justify-content: center; }
+.prod-thumb.active { border-color: var(--rouge); }
+.prod-thumb:hover { border-color: var(--rouge-light); }
+.prod-thumb svg { width: 60%; height: 60%; }
+.prod-condition-badge { position: absolute; top: 1rem; left: 1rem; background: var(--white); border: 1px solid var(--border-neutral); font-size: .62rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .8rem; color: var(--soft-black); }
+
+/* INFOS */
+.prod-info {}
+.prod-top-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.prod-category { font-size: .65rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--rouge); }
+.prod-badges { display: flex; gap: .4rem; }
+.prod-badge-tag { font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .65rem; }
+.prod-h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--soft-black); line-height: 1.1; margin-bottom: 1.2rem; }
+.prod-prices { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .8rem; }
+.prod-price-main { font-size: 1.8rem; font-weight: 500; color: var(--soft-black); }
+.prod-price-old { font-size: 1rem; color: var(--muted); text-decoration: line-through; }
+.prod-savings { font-size: .75rem; font-weight: 500; letter-spacing: .06em; color: var(--rouge); background: var(--rouge-pale); padding: .25rem .7rem; }
+
+.prod-divider { height: 1px; background: var(--border-neutral); margin: 1.5rem 0; }
+
+.prod-desc { font-size: .9rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.8rem; }
+
+/* Details grid */
+.prod-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1.8rem; }
+.detail-item { background: var(--warm); padding: .8rem 1rem; }
+.detail-label { font-size: .6rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.detail-val { font-size: .88rem; color: var(--soft-black); font-weight: 500; }
+
+/* CTA */
+.prod-ctas { display: flex; flex-direction: column; gap: .8rem; margin-bottom: 2rem; }
+.btn-add { width: 100%; justify-content: center; font-size: .78rem; padding: 1.1rem; }
+.btn-wish { width: 100%; justify-content: center; font-size: .75rem; }
+
+/* Care */
+.prod-care { margin-bottom: 1.8rem; }
+.prod-care-title { font-size: .65rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
+.prod-care-list { list-style: none; }
+.prod-care-list li { font-size: .82rem; color: var(--muted); padding: .35rem 0; border-bottom: 1px solid var(--border-neutral); display: flex; align-items: center; gap: .6rem; }
+.prod-care-list li::before { content: '—'; color: var(--rouge); opacity: .5; }
+
+/* Eco badge */
+.eco-bar { background: var(--rouge-pale); border: 1px solid var(--border); padding: 1rem 1.2rem; display: flex; align-items: center; gap: 1rem; }
+.eco-icon { font-size: 1.4rem; }
+.eco-text { font-size: .8rem; color: var(--rouge-deep); line-height: 1.5; }
+.eco-text strong { display: block; font-size: .85rem; }
+
+/* RELATED */
+.related-section { padding: 4rem 4rem 6rem; }
+.related-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--soft-black); margin-bottom: 2rem; }
+.related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+.prod-card { cursor: pointer; position: relative; transition: transform .3s; }
+.prod-card:hover { transform: translateY(-4px); }
+.prod-card:hover .prod-img-overlay { opacity: 1; }
+.prod-img { aspect-ratio: 3/4; position: relative; overflow: hidden; margin-bottom: .8rem; }
+.prod-img-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.prod-img-bg svg { width: 65%; height: 65%; }
+.prod-img-overlay { position: absolute; inset: 0; background: rgba(28,20,16,.4); opacity: 0; transition: opacity .3s; display: flex; align-items: center; justify-content: center; }
+.prod-name { font-family: 'Cormorant Garamond', serif; font-size: .98rem; color: var(--soft-black); margin-bottom: .3rem; }
+.prod-sub { font-size: .7rem; color: var(--muted); }
+.prod-rprice { font-size: .88rem; font-weight: 500; color: var(--soft-black); margin-top: .4rem; }
+
+/* Accordion */
+.accordion-item { border-bottom: 1px solid var(--border-neutral); }
+.accordion-btn { width: 100%; background: none; border: none; display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; font-family: 'Jost', sans-serif; font-size: .78rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--soft-black); cursor: pointer; }
+.accordion-btn .acc-icon { transition: transform .3s; color: var(--rouge); font-size: 1rem; }
+.accordion-btn.open .acc-icon { transform: rotate(45deg); }
+.accordion-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.accordion-body-inner { padding: 0 0 1rem; font-size: .82rem; line-height: 1.75; color: var(--muted); }
+
+@media (max-width: 960px) {
+  .prod-layout { grid-template-columns: 1fr; gap: 2.5rem; padding: 2rem 1.5rem 4rem; margin-top: 76px; }
+  .prod-gallery { position: static; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+  .related-section { padding: 3rem 1.5rem 4rem; }
+}
+@media (max-width: 540px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .prod-details-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-text" id="cursorText"></div>
+<div class="page-overlay" id="pageOverlay"><div class="overlay-logo">Remembrance</div></div>
+
+<nav id="navbar" class="scrolled">
+  <a href="index.html" class="nav-logo" data-nav>R<span>.</span>emembrance</a>
+  <ul class="nav-center">
+    <li><a href="index.html" data-nav>Accueil</a></li>
+    <li><a href="catalogue.html" class="active" data-nav>Catalogue</a></li>
+    <li><a href="index.html#drops" data-nav>Drops</a></li>
+    <li><a href="index.html#philosophie" data-nav>Notre âme</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-icon">Rechercher</button>
+    <button class="nav-icon" onclick="navigate('panier.html')">Panier <span class="cart-count" style="display:none">0</span></button>
+  </div>
+  <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="prod-layout" id="prodLayout">
+  <div class="breadcrumb" id="breadcrumb">
+    <a href="index.html" data-nav>Accueil</a><span>/</span>
+    <a href="catalogue.html" data-nav>Catalogue</a><span>/</span>
+    <span id="breadcrumbName">Produit</span>
+  </div>
+  <div class="prod-gallery" id="prodGallery"></div>
+  <div class="prod-info" id="prodInfo"></div>
+</div>
+
+<section class="related-section">
+  <h2>Vous aimerez aussi</h2>
+  <div class="related-grid" id="relatedGrid"></div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Livraison offerte dès 60€ <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Retours gratuits 14 jours <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Emballage recyclé <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Livraison offerte dès 60€ <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Retours gratuits 14 jours <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Emballage recyclé <span class="marquee-sep">✦</span></span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand"><a href="index.html" class="nav-logo" data-nav>R<span>.</span>emembrance</a><p>Recyclerie de mode artisanale.</p></div>
+    <div class="footer-col"><h4>Boutique</h4><ul><li><a href="catalogue.html" data-nav>Catalogue</a></li><li><a href="index.html#drops" data-nav>Drops</a></li></ul></div>
+    <div class="footer-col"><h4>Aide</h4><ul><li><a href="#">Livraison</a></li><li><a href="#">Retours</a></li></ul></div>
+    <div class="footer-col"><h4>Légal</h4><ul><li><a href="#">CGV</a></li><li><a href="#">Mentions légales</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Remembrance</span><div class="footer-socials"><a href="#">Instagram</a><a href="#">Pinterest</a></div></div>
+</footer>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span class="toast-msg"></span></div>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initShared();
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+
+  document.title = `${p.name} — Remembrance`;
+  document.getElementById('breadcrumbName').textContent = p.name;
+
+  const savings = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
+
+  // Gallery
+  document.getElementById('prodGallery').innerHTML = `
+    <div class="prod-main-img reveal-left" style="background:${p.bg}">
+      <div class="prod-main-img-inner">${p.svg}</div>
+      <div class="prod-condition-badge">${p.condition}</div>
+    </div>
+    <div class="prod-thumbs">
+      ${[p.bg, '#E8E0D4', '#F0EBE4', '#E4DDD6'].map((bg,i) => `
+        <div class="prod-thumb ${i===0?'active':''}" style="background:${bg}" onclick="this.parentElement.querySelectorAll('.prod-thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active')">
+          ${i===0?p.svg:`<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="20" fill="${p.colorHex}" opacity=".4"/></svg>`}
+        </div>
+      `).join('')}
+    </div>`;
+
+  // Info
+  const badgesHtml = p.tags.map(t => `<div class="prod-badge-tag ${t==='new'?'badge-new':t==='rare'?'badge-rouge':'badge-cc'}">${t==='coup-de-coeur'?'♥ Coup de cœur':t==='new'?'Nouveau':'Rare'}</div>`).join('');
+
+  document.getElementById('prodInfo').innerHTML = `
+    <div class="prod-top-meta reveal">
+      <div class="prod-category">${p.subcategory}</div>
+      <div class="prod-badges">${badgesHtml}</div>
+    </div>
+    <h1 class="prod-h1 reveal">${p.name}</h1>
+    <div class="prod-prices reveal">
+      <span class="prod-price-main">${p.price} €</span>
+      <span class="prod-price-old">${p.oldPrice} €</span>
+      <span class="prod-savings">−${savings}%</span>
+    </div>
+    <div class="prod-divider"></div>
+    <p class="prod-desc reveal">${p.desc}</p>
+    <div class="prod-details-grid reveal">
+      <div class="detail-item"><div class="detail-label">Taille</div><div class="detail-val">${p.size}</div></div>
+      <div class="detail-item"><div class="detail-label">État</div><div class="detail-val">${p.condition}</div></div>
+      <div class="detail-item"><div class="detail-label">Catégorie</div><div class="detail-val">${p.subcategory}</div></div>
+      <div class="detail-item"><div class="detail-label">Couleur</div><div class="detail-val" style="display:flex;align-items:center;gap:.5rem;"><span style="width:14px;height:14px;background:${p.colorHex};border-radius:50%;display:inline-block;border:1px solid var(--border-neutral)"></span>${p.color}</div></div>
+    </div>
+    <div class="prod-ctas reveal">
+      <button class="btn btn-rouge btn-add" onclick="Cart.add(${p.id})">Ajouter au panier</button>
+      <button class="btn btn-outline btn-wish">♡ Ajouter à ma liste de souhaits</button>
+    </div>
+    <div class="eco-bar reveal">
+      <div class="eco-icon">🌿</div>
+      <div class="eco-text"><strong>Impact positif</strong>En choisissant cette pièce, vous économisez environ 2 kg de CO₂ vs l'achat neuf.</div>
+    </div>
+    <div class="prod-divider"></div>
+    <div class="prod-care reveal">
+      <div class="prod-care-title">Entretien</div>
+      <ul class="prod-care-list">
+        ${p.care.map(c=>`<li>${c}</li>`).join('')}
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="accordion-item">
+        <button class="accordion-btn" onclick="toggleAcc(this)">Livraison & Retours <span class="acc-icon">+</span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Livraison offerte dès 60€ d'achat. Délai : 3–5 jours ouvrés. Retours gratuits sous 14 jours. Emballage 100% recyclé.</div></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-btn" onclick="toggleAcc(this)">Notre garantie <span class="acc-icon">+</span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Chaque pièce est inspectée et documentée avec honnêteté. Si l'état ne correspond pas à la description, nous remboursons intégralement.</div></div>
+      </div>
+    </div>`;
+
+  // Related
+  const related = PRODUCTS.filter(x => x.id !== p.id && (x.category === p.category || x.tags.some(t=>p.tags.includes(t)))).slice(0,4);
+  const fallback = PRODUCTS.filter(x => x.id !== p.id).slice(0, 4 - related.length);
+  const relatedItems = [...related, ...fallback].slice(0,4);
+
+  document.getElementById('relatedGrid').innerHTML = relatedItems.map(r => `
+    <div class="prod-card" onclick="navigate('produit.html?id=${r.id}')">
+      <div class="prod-img" style="background:${r.bg}">
+        <div class="prod-img-bg">${r.svg}</div>
+        <div class="prod-img-overlay">
+          <button class="btn btn-outline" style="background:var(--cream);color:var(--soft-black);font-size:.65rem;padding:.5rem 1rem;" onclick="event.stopPropagation();Cart.add(${r.id})">+ Panier</button>
+        </div>
+      </div>
+      <div class="prod-name">${r.name}</div>
+      <div class="prod-sub">T.${r.size} · ${r.condition}</div>
+      <div class="prod-rprice">${r.price} €</div>
+    </div>`).join('');
+});
+
+function toggleAcc(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  body.style.maxHeight = btn.classList.contains('open') ? body.scrollHeight + 'px' : '0';
+}
+</script>
+</body>
+</html>

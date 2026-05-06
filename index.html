@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rememberaance — Création textile unique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --rouge:#8B1A1A;--rouge-deep:#5C0F0F;--rouge-light:#C13535;--rouge-pale:#F7EFEF;
+  --cream:#FAF7F2;--warm:#F3EDE3;--linen:#E9E1D5;
+  --soft-black:#1C1410;--muted:#9A8F84;
+  --border:rgba(139,26,26,.13);--border-n:rgba(28,20,16,.09);
+  --terracotta:#C4622D;--sage:#6B8C6A;--mustard:#C8973A;--indigo:#3D4E7A;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--soft-black);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cursor{position:fixed;width:8px;height:8px;background:var(--rouge);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(139,26,26,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+@media(max-width:540px){body{cursor:auto}.cursor,.cursor-ring{display:none}}
+
+/* PAGE OVERLAY */
+.page-overlay{position:fixed;inset:0;background:var(--rouge-deep);z-index:1000;display:flex;align-items:center;justify-content:center;transition:opacity .5s,visibility .5s}
+.page-overlay.gone{opacity:0;visibility:hidden;pointer-events:none}
+.overlay-wordmark{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--cream);opacity:0;animation:fadeIn .5s ease .15s forwards}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.8rem 3.5rem;transition:all .4s}
+nav.scrolled{background:rgba(250,247,242,.95);backdrop-filter:blur(16px);padding:1rem 3.5rem;border-bottom:1px solid var(--border-n)}
+nav.on-slider{padding:1.8rem 3.5rem}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:.35rem;transition:color .3s}
+.nav-logo-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:background .3s}
+nav.on-slider .nav-logo{color:var(--cream)}
+nav.on-slider .nav-logo-dot{background:rgba(250,247,242,.6)}
+nav:not(.on-slider) .nav-logo{color:var(--soft-black)}
+nav:not(.on-slider) .nav-logo-dot{background:var(--rouge)}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{text-decoration:none;font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;transition:color .25s;position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;transition:width .3s}
+nav.on-slider .nav-links a{color:rgba(250,247,242,.8)}
+nav.on-slider .nav-links a::after{background:var(--cream)}
+nav:not(.on-slider) .nav-links a{color:var(--soft-black)}
+nav:not(.on-slider) .nav-links a::after{background:var(--rouge)}
+.nav-links a:hover{opacity:1!important}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;gap:1.2rem;align-items:center}
+.nav-btn{background:none;border:none;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:color .25s;display:flex;align-items:center;gap:.4rem}
+nav.on-slider .nav-btn{color:rgba(250,247,242,.8)}
+nav:not(.on-slider) .nav-btn{color:var(--soft-black)}
+.nav-btn:hover{color:var(--rouge)!important}
+.cart-pip{background:var(--rouge);color:#fff;width:16px;height:16px;border-radius:50%;font-size:.55rem;display:flex;align-items:center;justify-content:center}
+.nav-burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer}
+.nav-burger span{display:block;width:22px;height:1px;transition:.3s}
+nav.on-slider .nav-burger span{background:var(--cream)}
+nav:not(.on-slider) .nav-burger span{background:var(--soft-black)}
+
+/* ══════════════════════════════
+   HERO SLIDER — PLEIN ÉCRAN
+══════════════════════════════ */
+.hero-slider{position:relative;width:100%;height:100vh;overflow:hidden;background:var(--soft-black)}
+
+/* SLIDES */
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;pointer-events:none}
+.slide.active{opacity:1;pointer-events:auto}
+.slide-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+/* Couleur + texture par slide */
+.slide-visual{position:absolute;inset:0}
+/* Gradient overlay pour lisibilité texte */
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(28,20,16,.72) 0%,rgba(28,20,16,.3) 50%,rgba(28,20,16,.1) 100%)}
+/* Illustration de la pièce, côté droit */
+.slide-piece{position:absolute;right:8%;bottom:0;height:88vh;display:flex;align-items:flex-end;justify-content:center}
+.slide-piece svg{height:100%;width:auto;max-width:45vw;filter:drop-shadow(0 0 60px rgba(28,20,16,.4))}
+
+/* Contenu texte, côté gauche */
+.slide-content{position:absolute;left:3.5rem;top:50%;transform:translateY(-50%);max-width:480px;z-index:2}
+.slide-num{font-size:.6rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,247,242,.4);margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem}
+.slide-num::before{content:'';width:32px;height:1px;background:rgba(250,247,242,.3)}
+.slide-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.62rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--rouge-light);margin-bottom:1.2rem;background:rgba(139,26,26,.2);padding:.3rem .8rem}
+.slide-name{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5vw,5rem);font-weight:300;line-height:.98;color:var(--cream);margin-bottom:1.4rem}
+.slide-name em{font-style:italic;display:block}
+.slide-meta{display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem}
+.slide-meta-item{display:flex;flex-direction:column;gap:.2rem}
+.slide-meta-label{font-size:.58rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,247,242,.35)}
+.slide-meta-val{font-size:.88rem;color:rgba(250,247,242,.85);font-weight:400}
+.slide-price{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream)}
+.slide-ctas{display:flex;gap:.8rem;align-items:center}
+.btn-slide-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--cream);color:var(--soft-black);text-decoration:none;font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:.9rem 1.8rem;transition:background .3s,color .3s}
+.btn-slide-primary:hover{background:var(--rouge);color:var(--cream)}
+.btn-slide-ghost{display:inline-flex;align-items:center;gap:.4rem;background:rgba(250,247,242,.08);border:1px solid rgba(250,247,242,.2);font-family:'Jost',sans-serif;font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,247,242,.7);cursor:pointer;padding:.9rem 1.4rem;transition:background .3s,color .3s}
+.btn-slide-ghost:hover{background:rgba(250,247,242,.15);color:var(--cream)}
+
+/* ARROWS */
+.slider-arrow{position:absolute;top:50%;z-index:10;transform:translateY(-50%);background:rgba(250,247,242,.08);border:1px solid rgba(250,247,242,.15);width:52px;height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .25s,border-color .25s;color:var(--cream);font-size:1.1rem}
+.slider-arrow:hover{background:rgba(250,247,242,.18);border-color:rgba(250,247,242,.35)}
+.slider-arrow-prev{left:1.8rem}
+.slider-arrow-next{right:1.8rem}
+
+/* DOTS */
+.slider-dots{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:.6rem;z-index:10}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(250,247,242,.25);cursor:pointer;transition:background .3s,transform .3s}
+.dot.active{background:var(--cream);transform:scale(1.3)}
+
+/* Numéro de slide bas gauche */
+.slider-counter{position:absolute;bottom:2.5rem;left:3.5rem;z-index:10;font-size:.68rem;font-weight:500;letter-spacing:.12em;color:rgba(250,247,242,.35);display:flex;align-items:center;gap:.5rem}
+.slider-counter-current{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--cream)}
+
+/* Label bas droit */
+.slider-label{position:absolute;bottom:2.5rem;right:3.5rem;z-index:10;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(250,247,242,.25)}
+
+/* Progress bar */
+.slider-progress{position:absolute;bottom:0;left:0;height:2px;background:var(--rouge);z-index:10;transition:width 0s linear}
+
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;background:var(--rouge);padding:.75rem 0}
+.marquee-track{display:flex;animation:marquee 22s linear infinite;white-space:nowrap}
+.marquee-item{display:inline-flex;align-items:center;gap:1.2rem;padding:0 2rem;font-size:.64rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,247,242,.75)}
+.marquee-sep{color:rgba(250,247,242,.3)}
+
+/* DROPS */
+.drops-section{background:var(--soft-black);padding:5rem 3.5rem;position:relative;overflow:hidden}
+.drops-section::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(139,26,26,.18),transparent 70%);pointer-events:none}
+.drops-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem}
+.drops-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,247,242,.3);display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
+.drops-eyebrow::before{content:'';width:24px;height:1px;background:rgba(250,247,242,.2)}
+.drops-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--cream)}
+.drops-title em{font-style:italic;color:var(--rouge-light)}
+.drops-next-label{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,247,242,.25);text-align:right}
+.drops-next-time{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--cream);text-align:right;margin-top:.3rem}
+.drops-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.drop-card{position:relative;overflow:hidden;border:1px solid rgba(250,247,242,.07);padding:2.5rem;cursor:pointer;transition:border-color .3s,transform .3s;background:rgba(250,247,242,.02)}
+.drop-card:hover{border-color:rgba(250,247,242,.22);transform:translateY(-4px)}
+.drop-color-bar{position:absolute;top:0;left:0;right:0;height:3px}
+.drop-status{font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--rouge-light);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.drop-status-dot{width:5px;height:5px;background:var(--rouge-light);border-radius:50%;animation:pulse 1.5s ease infinite}
+.drop-name{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:300;color:var(--cream);margin-bottom:.35rem}
+.drop-subtitle{font-size:.78rem;color:rgba(250,247,242,.38);margin-bottom:1.8rem}
+.drop-countdown{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--cream);letter-spacing:.06em;line-height:1}
+.drop-countdown.live{color:var(--rouge-light)}
+.drop-countdown-label{font-size:.58rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,247,242,.22);margin-top:.4rem;margin-bottom:1.8rem}
+/* Teaser visuel : blocs colorés sans révéler les pièces */
+.drop-teaser{display:flex;gap:.4rem;align-items:flex-end;margin-bottom:1.2rem}
+.drop-teaser-block{height:48px;border-radius:2px;opacity:.7}
+.drop-teaser-mystery{width:40px;height:48px;border:1px dashed rgba(250,247,242,.15);display:flex;align-items:center;justify-content:center;font-size:1rem;color:rgba(250,247,242,.2)}
+.drop-cta-arrow{position:absolute;top:2rem;right:2rem;font-size:1.1rem;color:rgba(250,247,242,.18);transition:transform .3s,color .3s}
+.drop-card:hover .drop-cta-arrow{transform:translate(4px,-4px);color:rgba(250,247,242,.5)}
+.drop-notify{display:inline-flex;align-items:center;gap:.5rem;background:rgba(250,247,242,.06);border:1px solid rgba(250,247,242,.1);font-family:'Jost',sans-serif;font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,247,242,.55);padding:.55rem .9rem;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.drop-notify:hover{background:var(--rouge);color:var(--cream);border-color:var(--rouge)}
+.drop-notify.notified{background:rgba(107,140,106,.15);border-color:rgba(107,140,106,.3);color:#6B8C6A;cursor:default}
+
+/* ATELIER */
+.atelier-section{display:grid;grid-template-columns:1fr 1fr;min-height:560px;overflow:hidden}
+.atelier-visual{background:var(--linen);position:relative;overflow:hidden;min-height:400px}
+.fabric-comp{position:relative;width:100%;height:100%}
+.fabric-block{position:absolute;border-radius:2px}
+.atelier-quote-bubble{position:absolute;bottom:2.5rem;right:2.5rem;background:var(--cream);border:1px solid var(--border-n);padding:1.2rem 1.4rem;max-width:190px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;line-height:1.5;color:var(--soft-black)}
+.atelier-quote-bubble cite{display:block;font-style:normal;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.6rem}
+.atelier-text{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:var(--warm)}
+.section-eyebrow{font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--rouge);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.section-eyebrow::before{content:'';width:24px;height:1px;background:var(--rouge)}
+.atelier-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;line-height:1.1;color:var(--soft-black);margin-bottom:1.5rem}
+.atelier-text h2 em{font-style:italic;color:var(--rouge)}
+.atelier-text p{font-size:.9rem;line-height:1.85;color:var(--muted);margin-bottom:1.2rem;max-width:420px}
+.process-mini{display:flex;flex-direction:column;gap:.5rem;margin:1.8rem 0}
+.process-mini-row{display:flex;align-items:center;gap:.9rem;font-size:.82rem;color:var(--soft-black)}
+.process-mini-num{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--rouge);opacity:.5;min-width:18px}
+
+/* PIECES */
+.pieces-section{padding:5rem 3.5rem;background:var(--cream)}
+.pieces-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem}
+.pieces-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:300;color:var(--soft-black)}
+.pieces-header h2 em{font-style:italic;color:var(--rouge)}
+.pieces-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.pieces-grid .pc:nth-child(2){margin-top:2.5rem}
+.pieces-grid .pc:nth-child(4){margin-top:1.5rem}
+.pc{cursor:pointer;position:relative;transition:transform .35s}
+.pc:hover{transform:translateY(-6px)}
+.pc:hover .pc-overlay{opacity:1}
+.pc-img{aspect-ratio:3/4;position:relative;overflow:hidden;margin-bottom:.9rem}
+.pc-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.pc-bg svg{width:62%;height:62%}
+.pc-overlay{position:absolute;inset:0;background:rgba(28,20,16,.42);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem}
+.pc-badge{position:absolute;top:.75rem;left:.75rem;font-size:.56rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .65rem;background:var(--rouge);color:var(--cream)}
+.pc-badge-new{background:var(--soft-black);color:var(--cream);position:absolute;top:.75rem;right:.75rem;font-size:.56rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .65rem}
+.pc-cat{font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.pc-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--soft-black);margin-bottom:.5rem;line-height:1.2}
+.pc-footer{display:flex;align-items:center;justify-content:space-between}
+.pc-price{font-size:.88rem;font-weight:500;color:var(--soft-black)}
+.pc-unique{font-size:.6rem;color:var(--rouge);font-weight:500;letter-spacing:.06em}
+
+/* NEWSLETTER */
+.nl-section{background:var(--rouge-pale);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4.5rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.nl-left h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:300;color:var(--soft-black);line-height:1.1;margin-top:.6rem}
+.nl-left h2 em{font-style:italic;color:var(--rouge)}
+.nl-right p{font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem}
+.nl-form{display:flex;border:1px solid var(--border);background:var(--cream)}
+.nl-input{flex:1;background:transparent;border:none;padding:.85rem 1.1rem;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--soft-black);outline:none}
+.nl-input::placeholder{color:var(--muted)}
+.nl-submit{background:var(--rouge);color:var(--cream);border:none;padding:.85rem 1.3rem;font-family:'Jost',sans-serif;font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .25s;white-space:nowrap}
+.nl-submit:hover{background:var(--rouge-deep)}
+.nl-hint{font-size:.68rem;color:var(--muted);margin-top:.7rem}
+
+/* TESTIMONIALS */
+.testi-section{padding:5rem 3.5rem;background:var(--warm)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.testi-card{border:1px solid var(--border-n);padding:1.8rem;background:var(--cream);transition:border-color .3s}
+.testi-card:hover{border-color:var(--rouge)}
+.testi-card:nth-child(2){margin-top:1.5rem}
+.testi-stars{color:var(--rouge);font-size:.8rem;letter-spacing:.1em;margin-bottom:.9rem}
+.testi-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;line-height:1.65;color:var(--soft-black);margin-bottom:1.4rem}
+.testi-author{display:flex;align-items:center;gap:.7rem}
+.testi-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:500;color:var(--cream)}
+.testi-name{font-size:.82rem;font-weight:500;color:var(--soft-black)}
+.testi-loc{font-size:.7rem;color:var(--muted)}
+.testi-piece{font-size:.68rem;color:var(--rouge);font-style:italic;margin-top:.1rem}
+
+/* FOOTER */
+footer{background:var(--soft-black);color:var(--cream);padding:4rem 3.5rem 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--cream);text-decoration:none;display:flex;align-items:center;gap:.35rem;margin-bottom:.9rem}
+.footer-logo-dot{width:5px;height:5px;background:var(--rouge-light);border-radius:50%}
+.footer-brand p{font-size:.8rem;color:rgba(250,247,242,.32);line-height:1.75;max-width:220px}
+.footer-col h4{font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(250,247,242,.26);margin-bottom:1.1rem}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.6rem}
+.footer-col a{text-decoration:none;font-size:.8rem;color:rgba(250,247,242,.48);transition:color .2s}
+.footer-col a:hover{color:var(--rouge-light)}
+.footer-bottom{border-top:1px solid rgba(250,247,242,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.65rem;color:rgba(250,247,242,.2)}
+.footer-socials{display:flex;gap:1.2rem}
+.footer-socials a{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,247,242,.28);text-decoration:none;transition:color .2s}
+.footer-socials a:hover{color:var(--rouge-light)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;z-index:500;background:var(--soft-black);color:var(--cream);padding:.9rem 1.5rem;font-size:.75rem;letter-spacing:.05em;display:flex;align-items:center;gap:.7rem;transform:translateY(80px);opacity:0;transition:all .35s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-dot{width:5px;height:5px;background:var(--rouge-light);border-radius:50%;flex-shrink:0}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-l{opacity:0;transform:translateX(-28px);transition:opacity .6s ease,transform .6s ease}
+.reveal-l.visible{opacity:1;transform:translateX(0)}
+.reveal-r{opacity:0;transform:translateX(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal-r.visible{opacity:1;transform:translateX(0)}
+
+/* KEYFRAMES */
+@keyframes fadeIn{to{opacity:1}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+@keyframes progressAnim{from{width:0}to{width:100%}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .atelier-section{grid-template-columns:1fr}
+  .atelier-visual{min-height:280px}
+  .pieces-grid{grid-template-columns:repeat(2,1fr)}
+  .pieces-grid .pc:nth-child(2),.pieces-grid .pc:nth-child(4){margin-top:0}
+  .nl-section{grid-template-columns:1fr;gap:2rem}
+  .testi-grid{grid-template-columns:1fr}
+  .testi-card:nth-child(2){margin-top:0}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .drops-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem}
+  nav.scrolled{padding:.9rem 1.5rem}
+  nav.on-slider{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .slide-content{left:1.5rem;right:1.5rem;max-width:100%;top:auto;bottom:8rem;transform:none}
+  .slide-piece{right:0;height:70vh;opacity:.35}
+  .slider-arrow{width:40px;height:40px;font-size:.9rem}
+  .slider-arrow-prev{left:.8rem}
+  .slider-arrow-next{right:.8rem}
+  .slider-counter{left:1.5rem}
+  .slider-label{display:none}
+  .drops-section,.atelier-text,.pieces-section,.nl-section,.testi-section{padding-left:1.5rem;padding-right:1.5rem}
+  .drops-header{flex-direction:column;align-items:flex-start;gap:.8rem}
+  footer{padding:3rem 1.5rem 1.5rem}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:540px){
+  .pieces-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .slide-name{font-size:2.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="page-overlay" id="pageOverlay"><div class="overlay-wordmark">Rememberaance</div></div>
+
+<!-- NAV -->
+<nav id="navbar" class="on-slider">
+  <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Rememberaance</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="catalogue.html">Catalogue</a></li>
+    <li><a href="#drops">Drops</a></li>
+    <li><a href="#atelier">L'atelier</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="go('catalogue.html')">Catalogue</button>
+    <button class="nav-btn" onclick="go('panier.html')">Panier <span class="cart-pip" id="cartCount" style="display:none">0</span></button>
+  </div>
+  <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ═══════════════════════════════
+     HERO SLIDER PLEIN ÉCRAN
+═══════════════════════════════ -->
+<div class="hero-slider" id="heroSlider">
+  <!-- Slides générées par JS -->
+  <div id="slidesContainer"></div>
+
+  <!-- Flèches -->
+  <button class="slider-arrow slider-arrow-prev" id="prevArrow" aria-label="Précédent">&#8592;</button>
+  <button class="slider-arrow slider-arrow-next" id="nextArrow" aria-label="Suivant">&#8594;</button>
+
+  <!-- Dots -->
+  <div class="slider-dots" id="sliderDots"></div>
+
+  <!-- Compteur bas gauche -->
+  <div class="slider-counter">
+    <span class="slider-counter-current" id="counterCurrent">1</span>
+    <span>/ 5</span>
+  </div>
+
+  <!-- Label bas droit -->
+  <div class="slider-label">Derni&egrave;res cr&eacute;ations</div>
+
+  <!-- Barre de progression -->
+  <div class="slider-progress" id="sliderProgress"></div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Pi&egrave;ces uniques <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Cousu &agrave; la main <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Mati&egrave;res r&eacute;cup&eacute;r&eacute;es <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Drops limit&eacute;s <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Livraison offerte d&egrave;s 60&euro; <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Mode circulaire <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Pi&egrave;ces uniques <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Cousu &agrave; la main <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Mati&egrave;res r&eacute;cup&eacute;r&eacute;es <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Drops limit&eacute;s <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Livraison offerte d&egrave;s 60&euro; <span class="marquee-sep">&#10022;</span></span>
+    <span class="marquee-item">Mode circulaire <span class="marquee-sep">&#10022;</span></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     DROPS — FUTURES COLLECTIONS
+═══════════════════════════════ -->
+<section class="drops-section" id="drops">
+  <div class="drops-header reveal">
+    <div>
+      <div class="drops-eyebrow">Collections &agrave; venir</div>
+      <h2 class="drops-title">Prochains <em>drops</em></h2>
+    </div>
+    <div>
+      <div class="drops-next-label">Prochain drop dans</div>
+      <div class="drops-next-time" id="nextDropTime">&mdash;</div>
+    </div>
+  </div>
+  <div class="drops-grid" id="dropsGrid"></div>
+</section>
+
+<!-- ATELIER -->
+<div class="atelier-section" id="atelier">
+  <div class="atelier-visual reveal-l">
+    <div class="fabric-comp" id="fabricComp"></div>
+    <div class="atelier-quote-bubble">&ldquo;Je ne cr&eacute;e jamais deux fois la m&ecirc;me chose.&rdquo;<cite>&mdash; L'atelier Rememberaance</cite></div>
+  </div>
+  <div class="atelier-text reveal-r">
+    <div class="section-eyebrow">L'atelier</div>
+    <h2>Tissu r&eacute;cup&eacute;r&eacute;,<br><em>pi&egrave;ce invent&eacute;e</em></h2>
+    <p>Rememberaance c'est une cr&eacute;atrice, une machine &agrave; coudre, et des tissus qui n'attendaient qu'une nouvelle vie. Chaque v&ecirc;tement na&icirc;t d'une mati&egrave;re trouv&eacute;e — froiss&eacute;e, color&eacute;e, imprim&eacute;e — transform&eacute;e en quelque chose de neuf.</p>
+    <p>Pas de production en s&eacute;rie. Pas de stock. Juste des drops r&eacute;guliers de pi&egrave;ces cousues &agrave; la main, uniques et portables.</p>
+    <div class="process-mini">
+      <div class="process-mini-row"><span class="process-mini-num">01</span>R&eacute;cup&eacute;ration des tissus &amp; mati&egrave;res</div>
+      <div class="process-mini-row"><span class="process-mini-num" style="opacity:.2">&#8595;</span></div>
+      <div class="process-mini-row"><span class="process-mini-num">02</span>D&eacute;coupe &amp; assemblage patchwork</div>
+      <div class="process-mini-row"><span class="process-mini-num" style="opacity:.2">&#8595;</span></div>
+      <div class="process-mini-row"><span class="process-mini-num">03</span>Couture &amp; finitions &agrave; la main</div>
+      <div class="process-mini-row"><span class="process-mini-num" style="opacity:.2">&#8595;</span></div>
+      <div class="process-mini-row"><span class="process-mini-num">04</span>Une pi&egrave;ce unique &mdash; pour vous</div>
+    </div>
+    <a href="catalogue.html" class="btn-slide-primary" style="width:fit-content;background:var(--soft-black);color:var(--cream);text-decoration:none;font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:.95rem 2rem;display:inline-flex;align-items:center;gap:.5rem;transition:background .3s">Voir toutes les cr&eacute;ations &rarr;</a>
+  </div>
+</div>
+
+<!-- PIÈCES RÉCENTES -->
+<section class="pieces-section">
+  <div class="pieces-header reveal">
+    <div>
+      <div class="section-eyebrow">S&eacute;lection du moment</div>
+      <h2>Pi&egrave;ces <em>disponibles</em></h2>
+    </div>
+    <a href="catalogue.html" style="background:none;border:none;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s" onmouseover="this.style.color='var(--rouge)';this.style.borderColor='var(--rouge)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='transparent'">Tout voir &rarr;</a>
+  </div>
+  <div class="pieces-grid" id="piecesGrid"></div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="nl-section">
+  <div class="nl-left reveal-l">
+    <div class="section-eyebrow">Ne rien manquer</div>
+    <h2>Les drops<br><em>en avant-premi&egrave;re</em></h2>
+  </div>
+  <div class="nl-right reveal-r">
+    <p>Chaque nouveau drop part vite &mdash; parfois en quelques heures. Inscrivez-vous pour &ecirc;tre pr&eacute;venus en avant-premi&egrave;re, avant tout le monde.</p>
+    <div class="nl-form">
+      <input type="email" class="nl-input" id="nlInput" placeholder="votre@email.fr">
+      <button class="nl-submit" id="nlBtn">Me pr&eacute;venir</button>
+    </div>
+    <p class="nl-hint">Pas de spam. Un e-mail quand un drop arrive, c'est tout.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <div class="reveal">
+    <div class="section-eyebrow">Elles portent Rememberaance</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:300">Leurs <em style="font-style:italic;color:var(--rouge)">retours</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal"><div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="testi-text">&ldquo;La robe patchwork est exactement ce que je cherchais depuis des mois. On sent le soin dans chaque couture. Impossible de trouver &ccedil;a ailleurs.&rdquo;</div><div class="testi-author"><div class="testi-av" style="background:var(--rouge)">ML</div><div><div class="testi-name">Marie L.</div><div class="testi-loc">Paris</div><div class="testi-piece">Robe patchwork indigo</div></div></div></div>
+    <div class="testi-card reveal"><div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="testi-text">&ldquo;J'en suis &agrave; ma quatri&egrave;me commande. Chaque pi&egrave;ce est vraiment unique, les couleurs sont toujours surprenantes. Un vrai talent.&rdquo;</div><div class="testi-author"><div class="testi-av" style="background:#6B8C6A">SB</div><div><div class="testi-name">Sophie B.</div><div class="testi-loc">Lyon &middot; 4 pi&egrave;ces</div><div class="testi-piece">Veste boh&egrave;me terracotta</div></div></div></div>
+    <div class="testi-card reveal"><div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="testi-text">&ldquo;J'avais l'habitude de Vinted mais l&agrave; c'est une autre dimension. C'est de la cr&eacute;ation, pas de la revente. On re&ccedil;oit quelque chose de vivant.&rdquo;</div><div class="testi-author"><div class="testi-av" style="background:#C4622D">AC</div><div><div class="testi-name">Alice C.</div><div class="testi-loc">Bordeaux</div><div class="testi-piece">Manteau patchwork cr&egrave;me</div></div></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><a href="index.html" class="footer-logo"><span class="footer-logo-dot"></span>Rememberaance</a><p>Cr&eacute;ation textile artisanale. Pi&egrave;ces uniques cousues &agrave; la main &agrave; partir de mati&egrave;res r&eacute;cup&eacute;r&eacute;es.</p></div>
+    <div class="footer-col"><h4>Boutique</h4><ul><li><a href="catalogue.html">Toutes les cr&eacute;ations</a></li><li><a href="#drops">Drops &agrave; venir</a></li><li><a href="catalogue.html">Robes</a></li><li><a href="catalogue.html">Vestes &amp; Manteaux</a></li></ul></div>
+    <div class="footer-col"><h4>L'atelier</h4><ul><li><a href="#atelier">Ma d&eacute;marche</a></li><li><a href="#">Commande sur mesure</a></li><li><a href="#">Donner des tissus</a></li><li><a href="#">Presse</a></li></ul></div>
+    <div class="footer-col"><h4>Aide</h4><ul><li><a href="#">Livraison</a></li><li><a href="#">Retours</a></li><li><a href="#">Entretien des pi&egrave;ces</a></li><li><a href="#">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2025 Rememberaance &mdash; Tous droits r&eacute;serv&eacute;s</span><div class="footer-socials"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Pinterest</a></div></div>
+</footer>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span class="toast-msg"></span></div>
+
+<script>
+/* ── DATA ── */
+const SLIDES = [
+  { id:1, name:"Robe patchwork indigo", cat:"Robes", price:95, size:"38", mat:"Velours & coton récupérés",
+    bg:"#2A2E40", accent:"#3D4E7A",
+    svg:`<svg viewBox="0 0 280 520" xmlns="http://www.w3.org/2000/svg">
+      <path d="M96,36 Q140,20 184,36 L200,96 Q172,88 140,90 Q108,88 80,96 Z" fill="#3D4E7A" opacity=".95"/>
+      <path d="M80,96 Q64,160 68,440 Q104,480 140,482 Q176,480 212,440 Q216,160 200,96" fill="#3D4E7A" opacity=".82"/>
+      <rect x="76" y="180" width="60" height="56" fill="#C4622D" opacity=".7"/>
+      <rect x="144" y="220" width="56" height="70" fill="#C8973A" opacity=".65"/>
+      <rect x="76" y="276" width="60" height="48" fill="#6B8C6A" opacity=".7"/>
+      <rect x="144" y="300" width="56" height="60" fill="#8B1A1A" opacity=".5"/>
+      <rect x="76" y="340" width="124" height="55" fill="#C9908A" opacity=".45"/>
+      <path d="M126,44 L140,68 L154,44" fill="none" stroke="#2A3560" stroke-width="2"/>
+      <line x1="80" y1="96" x2="212" y2="96" stroke="#2A3560" stroke-width="1" opacity=".4"/>
+      <line x1="76" y1="180" x2="200" y2="180" stroke="#1A1C2A" stroke-width=".8" opacity=".3"/>
+      <line x1="76" y1="236" x2="200" y2="236" stroke="#1A1C2A" stroke-width=".8" opacity=".3"/>
+    </svg>`, tags:["unique"] },
+  { id:2, name:"Veste bohème terracotta", cat:"Vestes", price:78, size:"S/M", mat:"Lin & tweed assemblés",
+    bg:"#2E1E14", accent:"#C4622D",
+    svg:`<svg viewBox="0 0 300 480" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60,40 L16,120 L72,132 L60,420 L240,420 L228,132 L284,120 L240,40 L196,68 L150,52 L104,68 Z" fill="#C4622D" opacity=".88"/>
+      <rect x="80" y="130" width="75" height="62" fill="#C8973A" opacity=".65"/>
+      <rect x="158" y="155" width="60" height="80" fill="#6B8C6A" opacity=".55"/>
+      <rect x="80" y="210" width="75" height="90" fill="#8B1A1A" opacity=".45"/>
+      <rect x="158" y="250" width="60" height="90" fill="#3D4E7A" opacity=".45"/>
+      <path d="M104,68 Q150,44 196,68" fill="none" stroke="#9A4A1E" stroke-width="1.5"/>
+      <path d="M60,40 Q82,90 82,132 L60,420" fill="none" stroke="#9A4A1E" stroke-width="1.5"/>
+      <path d="M240,40 Q218,90 218,132 L240,420" fill="none" stroke="#9A4A1E" stroke-width="1.5"/>
+    </svg>`, tags:["new","unique"] },
+  { id:3, name:"Manteau patchwork crème", cat:"Manteaux", price:120, size:"40", mat:"Laine bouclée & lin naturel",
+    bg:"#1E1C18", accent:"#C8B890",
+    svg:`<svg viewBox="0 0 300 560" xmlns="http://www.w3.org/2000/svg">
+      <path d="M68,48 L20,128 L68,140 L56,496 L244,496 L232,140 L280,128 L232,48 Q186,30 150,36 Q114,30 68,48Z" fill="#C8B890" opacity=".78"/>
+      <rect x="60" y="160" width="80" height="70" fill="#C4622D" opacity=".4"/>
+      <rect x="144" y="185" width="74" height="80" fill="#3D4E7A" opacity=".38"/>
+      <rect x="60" y="248" width="80" height="80" fill="#6B8C6A" opacity=".4"/>
+      <rect x="144" y="276" width="74" height="72" fill="#C8973A" opacity=".38"/>
+      <rect x="60" y="340" width="158" height="90" fill="#C9908A" opacity=".32"/>
+      <circle cx="146" cy="185" r="7" fill="#8B6040" opacity=".6"/>
+      <circle cx="146" cy="220" r="7" fill="#8B6040" opacity=".6"/>
+      <circle cx="146" cy="255" r="7" fill="#8B6040" opacity=".6"/>
+      <line x1="60" y1="160" x2="218" y2="160" stroke="#A89870" stroke-width=".8" opacity=".3"/>
+    </svg>`, tags:["coup-de-coeur","unique"] },
+  { id:4, name:"Jupe patchwork multicolore", cat:"Bas", price:62, size:"36/38", mat:"Cotonnades variées récupérées",
+    bg:"#1A1408", accent:"#C8973A",
+    svg:`<svg viewBox="0 0 260 480" xmlns="http://www.w3.org/2000/svg">
+      <rect x="82" y="28" width="96" height="52" rx="0" fill="#9A8778" opacity=".85"/>
+      <path d="M82,80 Q52,156 44,440 L216,440 Q208,156 178,80 Z" fill="#C4622D" opacity=".6"/>
+      <polygon points="82,80 140,80 116,440 44,440" fill="#C8973A" opacity=".6"/>
+      <polygon points="140,80 178,80 216,440 116,440" fill="#3D4E7A" opacity=".55"/>
+      <polygon points="82,200 178,200 168,290 92,290" fill="#6B8C6A" opacity=".5"/>
+      <polygon points="92,290 168,290 160,380 100,380" fill="#C9908A" opacity=".45"/>
+      <line x1="82" y1="80" x2="178" y2="80" stroke="#7A6050" stroke-width="1.5" opacity=".5"/>
+    </svg>`, tags:["new","unique"] },
+  { id:5, name:"Top crop brodé fleuri", cat:"Hauts", price:48, size:"S/M", mat:"Dentelle & lin à fleurs",
+    bg:"#1E1018", accent:"#C9908A",
+    svg:`<svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg">
+      <path d="M80,52 L28,120 L76,132 L68,300 L212,300 L204,132 L252,120 L200,52 Q180,36 140,40 Q100,36 80,52Z" fill="#C9908A" opacity=".82"/>
+      <rect x="72" y="140" width="60" height="50" fill="#8B1A1A" opacity=".45"/>
+      <rect x="136" y="155" width="60" height="55" fill="#3D4E7A" opacity=".4"/>
+      <rect x="72" y="200" width="124" height="60" fill="#6B8C6A" opacity=".38"/>
+      <circle cx="92" cy="165" r="8" fill="#C4622D" opacity=".5"/>
+      <circle cx="120" cy="148" r="6" fill="#C8973A" opacity=".55"/>
+      <circle cx="168" cy="170" r="9" fill="#8B1A1A" opacity=".45"/>
+      <circle cx="150" cy="200" r="7" fill="#C4622D" opacity=".4"/>
+      <path d="M104,60 Q140,44 176,60" fill="none" stroke="#A87888" stroke-width="1.5"/>
+    </svg>`, tags:["unique"] }
+];
+
+const DROPS = [
+  {
+    id:"d1", name:"Drop Automne Sauvage",
+    subtitle:"8 pièces inédites — laines & velours récupérés",
+    date: new Date(Date.now() + 3*24*3600*1000),
+    bar:"linear-gradient(to right,#C4622D,#8B1A1A)",
+    colors:["#C4622D","#8B1A1A","#C8973A","#6B8C6A","#3D4E7A"],
+    nbPieces: 8
+  },
+  {
+    id:"d2", name:"Drop Géométrique",
+    subtitle:"6 créations — cotonnades & lin patchwork",
+    date: new Date(Date.now() + 11*24*3600*1000),
+    bar:"linear-gradient(to right,#3D4E7A,#6B8C6A)",
+    colors:["#3D4E7A","#6B8C6A","#C8973A","#C9908A","#8B1A1A"],
+    nbPieces: 6
+  }
+];
+
+/* ── UTILS ── */
+function go(p){const o=document.getElementById('pageOverlay');o.classList.remove('gone');setTimeout(()=>location.href=p,380);}
+function toast(m){const t=document.getElementById('toast');t.querySelector('.toast-msg').textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3200);}
+function fmt(ms){const d=Math.floor(ms/86400000),h=Math.floor((ms%86400000)/3600000),mi=Math.floor((ms%3600000)/60000),s=Math.floor((ms%60000)/1000);if(d>0)return d+'j '+String(h).padStart(2,'0')+'h '+String(mi).padStart(2,'0')+'m';return String(h).padStart(2,'0')+':'+String(mi).padStart(2,'0')+':'+String(s).padStart(2,'0');}
+const Cart={
+  get(){try{return JSON.parse(localStorage.getItem('r_cart')||'[]')}catch{return[]}},
+  save(i){localStorage.setItem('r_cart',JSON.stringify(i))},
+  add(id){const it=this.get(),p=SLIDES.find(x=>x.id===id);if(!p)return;const ex=it.find(i=>i.id===id);if(ex)ex.qty++;else it.push({id,qty:1});this.save(it);this.updateUI();toast('"'+p.name+'" ajouté au panier');},
+  count(){return this.get().reduce((s,i)=>s+i.qty,0);},
+  updateUI(){const el=document.getElementById('cartCount');const n=this.count();if(el){el.textContent=n;el.style.display=n?'flex':'none';}}
+};
+
+/* ── SLIDER ── */
+let currentSlide = 0;
+let autoTimer = null;
+const AUTO_DELAY = 5000;
+
+function buildSlider() {
+  const container = document.getElementById('slidesContainer');
+  const dotsContainer = document.getElementById('sliderDots');
+  document.getElementById('counterCurrent').parentElement.lastChild.textContent = ' / '+SLIDES.length;
+
+  SLIDES.forEach((s, i) => {
+    // Slide
+    const slide = document.createElement('div');
+    slide.className = 'slide' + (i===0 ? ' active' : '');
+    slide.innerHTML = `
+      <div class="slide-visual" style="background:${s.bg}">
+        <!-- Texture subtile -->
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,${s.accent}22 0%,transparent 60%)"></div>
+      </div>
+      <div class="slide-overlay"></div>
+      <div class="slide-piece">${s.svg}</div>
+      <div class="slide-content">
+        <div class="slide-num"><span>0${i+1}</span></div>
+        <div class="slide-tag">&#10022; Dernière création</div>
+        <h2 class="slide-name">${s.name.includes(' ') ? s.name.split(' ').map((w,j)=>j===Math.floor(s.name.split(' ').length/2)?'<em>'+w+'</em>':w).join(' ') : '<em>'+s.name+'</em>'}</h2>
+        <div class="slide-meta">
+          <div class="slide-meta-item"><span class="slide-meta-label">Catégorie</span><span class="slide-meta-val">${s.cat}</span></div>
+          <div class="slide-meta-item"><span class="slide-meta-label">Taille</span><span class="slide-meta-val">${s.size}</span></div>
+          <div class="slide-meta-item"><span class="slide-meta-label">Matières</span><span class="slide-meta-val">${s.mat}</span></div>
+        </div>
+        <div class="slide-price">${s.price} €</div>
+        <div class="slide-ctas" style="margin-top:1.5rem">
+          <button class="btn-slide-primary" onclick="go('produit.html?id=${s.id}')">Voir la pièce →</button>
+          <button class="btn-slide-ghost" onclick="Cart.add(${s.id})">+ Panier</button>
+        </div>
+      </div>`;
+    container.appendChild(slide);
+
+    // Dot
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i===0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function goToSlide(n, resetAuto = true) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+
+  currentSlide = (n + SLIDES.length) % SLIDES.length;
+
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+  document.getElementById('counterCurrent').textContent = currentSlide + 1;
+
+  // Progress bar reset
+  const prog = document.getElementById('sliderProgress');
+  prog.style.transition = 'none';
+  prog.style.width = '0%';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      prog.style.transition = 'width '+AUTO_DELAY+'ms linear';
+      prog.style.width = '100%';
+    });
+  });
+
+  if (resetAuto) startAuto();
+}
+
+function startAuto() {
+  clearInterval(autoTimer);
+  autoTimer = setInterval(() => goToSlide(currentSlide + 1, false), AUTO_DELAY);
+}
+
+/* ── DROPS ── */
+function buildDrops() {
+  document.getElementById('dropsGrid').innerHTML = DROPS.map(d => `
+    <div class="drop-card reveal" onclick="go('catalogue.html')">
+      <div class="drop-color-bar" style="background:${d.bar}"></div>
+      <div class="drop-status"><span class="drop-status-dot"></span>Drop &agrave; venir &mdash; Non encore disponible</div>
+      <div class="drop-name">${d.name}</div>
+      <div class="drop-subtitle">${d.subtitle}</div>
+      <div class="drop-countdown" id="cd-${d.id}">—</div>
+      <div class="drop-countdown-label">Avant la mise en ligne</div>
+      <div class="drop-teaser">
+        ${d.colors.map(c=>`<div class="drop-teaser-block" style="width:${Math.floor(100/d.colors.length)-2}%;background:${c}"></div>`).join('')}
+        <div class="drop-teaser-mystery">?</div>
+      </div>
+      <p style="font-size:.75rem;color:rgba(250,247,242,.3);margin-bottom:1rem">${d.nbPieces} pi&egrave;ces &mdash; palette de couleurs ci-dessus</p>
+      <button class="drop-notify" id="notif-${d.id}" onclick="event.stopPropagation();activateNotif('${d.id}','${d.name}')">&#128276; Me pr&eacute;venir &agrave; la sortie</button>
+      <div class="drop-cta-arrow">&#8599;</div>
+    </div>`).join('');
+}
+
+function activateNotif(id, name) {
+  const btn = document.getElementById('notif-'+id);
+  btn.classList.add('notified');
+  btn.textContent = '✓ Vous serez prévenue';
+  btn.onclick = null;
+  toast('Notification activée pour « '+name+' »');
+}
+
+/* ── ATELIER VISUAL ── */
+function buildAtelier() {
+  const c = document.getElementById('fabricComp');
+  const bl=[
+    {l:'8%',t:'10%',w:'44%',h:'40%',bg:'#C4622D',r:'-4deg',o:.65},
+    {l:'52%',t:'6%',w:'40%',h:'46%',bg:'#3D4E7A',r:'3deg',o:.6},
+    {l:'10%',t:'52%',w:'38%',h:'40%',bg:'#6B8C6A',r:'2deg',o:.6},
+    {l:'50%',t:'54%',w:'42%',h:'36%',bg:'#C8973A',r:'-2deg',o:.6},
+    {l:'26%',t:'30%',w:'48%',h:'40%',bg:'#F3EDE3',r:'0deg',o:.95}
+  ];
+  c.innerHTML = bl.map(b=>`<div class="fabric-block" style="left:${b.l};top:${b.t};width:${b.w};height:${b.h};background:${b.bg};transform:rotate(${b.r});opacity:${b.o}"></div>`).join('')+
+  `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;background:var(--cream);padding:1.2rem;text-align:center;box-shadow:0 8px 32px rgba(28,20,16,.14)">${SLIDES[0].svg.replace('<svg','<svg style="width:72px;height:90px"')}<div style="font-family:'Cormorant Garamond',serif;font-size:.78rem;font-style:italic;color:var(--soft-black);margin-top:.4rem">Pièce unique</div></div>`;
+}
+
+/* ── PIECES GRID ── */
+function buildPieces() {
+  document.getElementById('piecesGrid').innerHTML = SLIDES.slice(0,4).map(p=>`
+    <div class="pc" onclick="go('produit.html?id=${p.id}')">
+      <div class="pc-img" style="background:${p.bg}20;border:1px solid ${p.bg}40">
+        <div class="pc-bg" style="background:${p.bg}15">${p.svg}</div>
+        <div class="pc-badge">Unique</div>
+        ${p.tags.includes('new')?'<div class="pc-badge-new">New</div>':''}
+        <div class="pc-overlay">
+          <button class="btn-slide-primary" style="font-size:.65rem;padding:.6rem 1.1rem" onclick="event.stopPropagation();Cart.add(${p.id})">+ Panier</button>
+          <button style="background:rgba(250,247,242,.1);border:1px solid rgba(250,247,242,.2);font-family:'Jost',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,247,242,.75);cursor:pointer;padding:.5rem .9rem" onclick="event.stopPropagation();go('produit.html?id=${p.id}')">Voir →</button>
+        </div>
+      </div>
+      <div class="pc-cat">${p.cat} · T.${p.size}</div>
+      <div class="pc-name">${p.name}</div>
+      <div class="pc-footer"><span class="pc-price">${p.price} €</span><span class="pc-unique">1 ex.</span></div>
+    </div>`).join('');
+}
+
+/* ── COUNTDOWNS ── */
+function tick() {
+  let nextMs = Infinity;
+  DROPS.forEach(d => {
+    const el = document.getElementById('cd-'+d.id);
+    if (!el) return;
+    const diff = d.date - Date.now();
+    if (diff > 0) { el.textContent = fmt(diff); el.classList.remove('live'); if(diff<nextMs) nextMs=diff; }
+    else { el.textContent = 'Disponible !'; el.classList.add('live'); }
+  });
+  const n = document.getElementById('nextDropTime');
+  if (n && nextMs < Infinity) n.textContent = fmt(nextMs);
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => document.getElementById('pageOverlay').classList.add('gone'), 480);
+
+  // Cursor
+  const cur = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+  (function fr(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(fr); })();
+
+  // Nav on/off slider
+  const nav = document.getElementById('navbar');
+  const slider = document.getElementById('heroSlider');
+  const sliderH = () => slider.offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (scrollY > sliderH() - 80) {
+      nav.classList.remove('on-slider');
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.add('on-slider');
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Slider arrows
+  document.getElementById('prevArrow').addEventListener('click', () => goToSlide(currentSlide - 1));
+  document.getElementById('nextArrow').addEventListener('click', () => goToSlide(currentSlide + 1));
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+    if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+  });
+
+  // Swipe
+  let touchX = 0;
+  slider.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+  slider.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) goToSlide(dx < 0 ? currentSlide + 1 : currentSlide - 1);
+  });
+
+  // Reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold:.1 });
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => obs.observe(el));
+
+  // Build all sections
+  buildSlider();
+  buildDrops();
+  buildAtelier();
+  buildPieces();
+
+  // Start auto-play + progress bar
+  goToSlide(0);
+  startAuto();
+
+  // Countdowns
+  tick(); setInterval(tick, 1000);
+
+  // Cart
+  Cart.updateUI();
+
+  // Newsletter
+  document.getElementById('nlBtn').addEventListener('click', () => {
+    const i = document.getElementById('nlInput');
+    if (i.value.includes('@')) { i.value=''; i.placeholder='✓ Inscrite — à très vite !'; toast('Vous serez prévenue en avant-première'); }
+  });
+});
+</script>
+</body>
+</html>
