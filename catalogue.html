@@ -6,17 +6,85 @@
 <title>Catalogue — Remembrance</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.catalogue-layout { display: grid; grid-template-columns: 260px 1fr; gap: 3rem; padding: 2rem 4rem 5rem; margin-top: 90px; }
+/* LAYOUT */
+.catalogue-layout { padding: 2rem 4rem 5rem; margin-top: 90px; }
 
-/* SIDEBAR */
-.sidebar { position: sticky; top: 110px; align-self: start; height: calc(100vh - 130px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--linen) transparent; padding-right: .6rem; }
-.sidebar::-webkit-scrollbar { width: 3px; }
-.sidebar::-webkit-scrollbar-track { background: transparent; }
-.sidebar::-webkit-scrollbar-thumb { background: var(--linen); border-radius: 2px; }
-.sidebar::-webkit-scrollbar-thumb:hover { background: var(--earth); }
-.sidebar-section { margin-bottom: 2.2rem; padding-bottom: 2.2rem; border-bottom: 1px solid var(--border-neutral); }
-.sidebar-section:last-child { border-bottom: none; }
-.sidebar-title { font-size: .78rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
+/* TOOLBAR */
+.cat-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+.cat-left { display: flex; align-items: center; gap: 1.2rem; }
+.cat-count { font-size: .82rem; color: var(--muted); }
+.filter-btn {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: var(--soft-black); color: var(--cream);
+  border: none; font-family: 'Jost', sans-serif; font-size: .74rem;
+  font-weight: 500; letter-spacing: .13em; text-transform: uppercase;
+  padding: .65rem 1.4rem; cursor: pointer; transition: background .25s;
+}
+.filter-btn:hover { background: var(--rouge); }
+.filter-btn-icon { display: flex; flex-direction: column; gap: 3px; }
+.filter-btn-icon span { display: block; height: 1px; background: currentColor; transition: width .2s; }
+.filter-btn-icon span:nth-child(1) { width: 14px; }
+.filter-btn-icon span:nth-child(2) { width: 10px; }
+.filter-btn-icon span:nth-child(3) { width: 6px; }
+.filter-badge { background: var(--rouge); color: var(--cream); width: 16px; height: 16px; border-radius: 50%; font-size: .6rem; display: flex; align-items: center; justify-content: center; }
+
+/* FILTER DRAWER */
+.drawer-overlay { position: fixed; inset: 0; background: rgba(28,20,16,.45); z-index: 300; opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility .35s; }
+.drawer-overlay.open { opacity: 1; visibility: visible; }
+.filter-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 380px; max-width: 92vw;
+  background: var(--cream); z-index: 301;
+  display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform .38s cubic-bezier(.4,0,.2,1);
+  box-shadow: -8px 0 40px rgba(28,20,16,.12);
+}
+.filter-drawer.open { transform: translateX(0); }
+
+.drawer-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.6rem 2rem; border-bottom: 1px solid var(--border-neutral);
+  flex-shrink: 0;
+}
+.drawer-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; color: var(--soft-black); }
+.drawer-close {
+  background: none; border: none; cursor: pointer; font-size: 1.2rem;
+  color: var(--muted); line-height: 1; padding: .2rem; transition: color .2s;
+}
+.drawer-close:hover { color: var(--rouge); }
+
+.drawer-body {
+  flex: 1; overflow-y: auto; padding: 1.6rem 2rem;
+  scrollbar-width: thin; scrollbar-color: var(--linen) transparent;
+}
+.drawer-body::-webkit-scrollbar { width: 3px; }
+.drawer-body::-webkit-scrollbar-track { background: transparent; }
+.drawer-body::-webkit-scrollbar-thumb { background: var(--linen); border-radius: 2px; }
+.drawer-body::-webkit-scrollbar-thumb:hover { background: var(--earth); }
+
+.drawer-foot {
+  padding: 1.2rem 2rem; border-top: 1px solid var(--border-neutral);
+  display: flex; gap: .8rem; flex-shrink: 0;
+}
+.drawer-apply {
+  flex: 1; background: var(--soft-black); color: var(--cream); border: none;
+  font-family: 'Jost', sans-serif; font-size: .74rem; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase; padding: .85rem;
+  cursor: pointer; transition: background .25s;
+}
+.drawer-apply:hover { background: var(--rouge); }
+.drawer-reset {
+  background: none; border: 1px solid var(--border-neutral); color: var(--muted);
+  font-family: 'Jost', sans-serif; font-size: .74rem; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase; padding: .85rem 1.2rem;
+  cursor: pointer; transition: all .25s;
+}
+.drawer-reset:hover { border-color: var(--rouge); color: var(--rouge); }
+
+/* DRAWER SECTIONS */
+.drawer-section { padding-bottom: 1.8rem; margin-bottom: 1.8rem; border-bottom: 1px solid var(--border-neutral); }
+.drawer-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.drawer-section-title { font-size: .72rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.1rem; }
+
 .filter-list { list-style: none; }
 .filter-list li { margin-bottom: .55rem; }
 .filter-check { display: flex; align-items: center; gap: .7rem; cursor: pointer; padding: .2rem 0; }
@@ -24,41 +92,32 @@
 .filter-box { width: 14px; height: 14px; border: 1px solid var(--border-neutral); flex-shrink: 0; transition: all .2s; display: flex; align-items: center; justify-content: center; }
 .filter-check input:checked + .filter-box { background: var(--rouge); border-color: var(--rouge); }
 .filter-check input:checked + .filter-box::after { content: ''; width: 6px; height: 4px; border-left: 1.5px solid var(--cream); border-bottom: 1.5px solid var(--cream); transform: rotate(-45deg) translateY(-1px); display: block; }
-.filter-label { font-size: .82rem; color: var(--soft-black); }
-.filter-count { margin-left: auto; font-size: .7rem; color: var(--muted); }
-.color-swatches { display: flex; gap: .5rem; flex-wrap: wrap; }
-.color-swatch { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: border-color .2s; }
-.color-swatch.active, .color-swatch:hover { border-color: var(--soft-black); }
-.price-range { display: flex; flex-direction: column; gap: .8rem; }
-.price-inputs { display: flex; gap: .5rem; align-items: center; }
-.price-input { width: 70px; border: 1px solid var(--border-neutral); background: transparent; font-family: 'Jost', sans-serif; font-size: .82rem; color: var(--soft-black); padding: .45rem .6rem; outline: none; }
-.price-input:focus { border-color: var(--rouge); }
-.price-sep { font-size: .75rem; color: var(--muted); }
+.filter-label { font-size: .84rem; color: var(--soft-black); }
+.filter-count { margin-left: auto; font-size: .72rem; color: var(--muted); }
+
+.sort-select { width: 100%; background: transparent; border: 1px solid var(--border-neutral); font-family: 'Jost', sans-serif; font-size: .82rem; color: var(--soft-black); padding: .55rem .8rem; cursor: pointer; outline: none; }
+.sort-select:focus { border-color: var(--rouge); }
+
 .condition-btns { display: flex; flex-wrap: wrap; gap: .4rem; }
-.cond-btn { background: transparent; border: 1px solid var(--border-neutral); font-family: 'Jost', sans-serif; font-size: .7rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: .35rem .8rem; cursor: pointer; transition: all .2s; }
+.cond-btn { background: transparent; border: 1px solid var(--border-neutral); font-family: 'Jost', sans-serif; font-size: .72rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: .35rem .8rem; cursor: pointer; transition: all .2s; }
 .cond-btn.active, .cond-btn:hover { background: var(--rouge); border-color: var(--rouge); color: var(--cream); }
+
 .size-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; }
 .size-btn { background: transparent; border: 1px solid var(--border-neutral); font-family: 'Jost', sans-serif; font-size: .75rem; color: var(--muted); padding: .45rem; cursor: pointer; transition: all .2s; text-align: center; }
 .size-btn.active, .size-btn:hover { background: var(--rouge); border-color: var(--rouge); color: var(--cream); }
-.reset-btn { background: none; border: none; font-family: 'Jost', sans-serif; font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); cursor: pointer; text-decoration: underline; padding: 0; margin-top: .5rem; }
-.reset-btn:hover { color: var(--rouge); }
 
-/* CATALOGUE HEADER */
-.cat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-.cat-breadcrumb { font-size: .72rem; color: var(--muted); letter-spacing: .06em; }
-.cat-breadcrumb span { color: var(--soft-black); }
-.cat-sort { display: flex; align-items: center; gap: 1rem; }
-.cat-count { font-size: .78rem; color: var(--muted); }
-.sort-select { background: transparent; border: 1px solid var(--border-neutral); font-family: 'Jost', sans-serif; font-size: .78rem; color: var(--soft-black); padding: .45rem .8rem; cursor: pointer; outline: none; }
+.price-inputs { display: flex; gap: .5rem; align-items: center; }
+.price-input { width: 80px; border: 1px solid var(--border-neutral); background: transparent; font-family: 'Jost', sans-serif; font-size: .82rem; color: var(--soft-black); padding: .5rem .7rem; outline: none; }
+.price-input:focus { border-color: var(--rouge); }
+.price-sep { font-size: .8rem; color: var(--muted); }
 
 /* ACTIVE FILTERS */
 .active-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
-.active-filter-tag { background: var(--rouge-pale); color: var(--rouge); font-size: .82rem; font-weight: 500; letter-spacing: .08em; padding: .3rem .7rem; display: flex; align-items: center; gap: .4rem; cursor: pointer; }
+.active-filter-tag { background: var(--rouge-pale); color: var(--rouge); font-size: .78rem; font-weight: 500; letter-spacing: .08em; padding: .3rem .7rem; display: flex; align-items: center; gap: .4rem; cursor: pointer; }
 .active-filter-tag:hover { background: var(--rouge); color: var(--cream); }
 
 /* GRID */
-.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-
+.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .prod-card { cursor: pointer; position: relative; transition: transform .3s ease; }
 .prod-card:hover { transform: translateY(-5px); }
 .prod-card:hover .prod-img-overlay { opacity: 1; }
@@ -66,16 +125,15 @@
 .prod-img-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 .prod-img-bg svg { width: 65%; height: 65%; }
 .prod-img-overlay { position: absolute; inset: 0; background: rgba(28,20,16,.42); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; opacity: 0; transition: opacity .3s; }
-.prod-badge { position: absolute; top: .7rem; left: .7rem; font-size: .76rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .25rem .7rem; }
+.prod-badge { position: absolute; top: .7rem; left: .7rem; font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .22rem .65rem; }
 .badge-new { background: var(--soft-black); color: var(--cream); }
 .badge-rare { background: var(--rouge); color: var(--cream); }
 .badge-cc { background: var(--rouge-pale); color: var(--rouge-deep); }
-.prod-cat { font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
-.prod-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--soft-black); margin-bottom: .5rem; }
+.prod-cat { font-size: .74rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.prod-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; color: var(--soft-black); margin-bottom: .5rem; }
 .prod-bottom { display: flex; align-items: center; justify-content: space-between; }
 .prod-price { font-size: .9rem; font-weight: 500; color: var(--soft-black); }
 .prod-old { font-size: .78rem; color: var(--muted); text-decoration: line-through; margin-left: .4rem; }
-.prod-size { font-size: .8rem; color: var(--muted); letter-spacing: .06em; }
 
 .no-results { grid-column: 1/-1; text-align: center; padding: 5rem 2rem; }
 .no-results h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--muted); margin-bottom: 1rem; }
@@ -93,15 +151,14 @@
 
 @media (max-width: 960px) {
   .cat-hero { padding: 4rem 1.5rem 2rem; margin-top: 68px; }
-  .catalogue-layout { grid-template-columns: 1fr; padding: 1.5rem 1.5rem 4rem; }
-  .sidebar { position: static; height: auto; overflow-y: visible; }
+  .catalogue-layout { padding: 1.5rem 1.5rem 4rem; }
   .products-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 540px) {
   .products-grid { grid-template-columns: 1fr; }
   .cat-hero { padding: 3.5rem 1.5rem 1.5rem; }
+  .filter-drawer { width: 100vw; max-width: 100vw; }
 }
-
 </style>
 </head>
 <body>
@@ -139,23 +196,27 @@
   </div>
 </div>
 
-<div class="catalogue-layout">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
+<!-- FILTER DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="filter-drawer" id="filterDrawer">
+  <div class="drawer-head">
+    <span class="drawer-title">Filtres & Triage</span>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
 
-    <div class="sidebar-section">
-      <div class="sidebar-title">Trier par</div>
-      <select class="sort-select" id="sortSelect" style="width:100%">
+    <div class="drawer-section">
+      <div class="drawer-section-title">Trier par</div>
+      <select class="sort-select" id="sortSelect">
         <option value="default">Recommandés</option>
         <option value="price-asc">Prix croissant</option>
         <option value="price-desc">Prix décroissant</option>
         <option value="saving">Meilleures affaires</option>
-        <option value="condition">État</option>
       </select>
     </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-title">Catégorie</div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Catégorie</div>
       <ul class="filter-list" id="catFilters">
         <li><label class="filter-check"><input type="checkbox" value="all" checked id="cat-all"><span class="filter-box"></span><span class="filter-label">Tout</span><span class="filter-count">12</span></label></li>
         <li><label class="filter-check"><input type="checkbox" value="manteaux"><span class="filter-box"></span><span class="filter-label">Manteaux</span><span class="filter-count">2</span></label></li>
@@ -167,18 +228,8 @@
       </ul>
     </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-title">État</div>
-      <div class="condition-btns">
-        <button class="cond-btn active" data-cond="all">Tout</button>
-        <button class="cond-btn" data-cond="Excellent">Excellent</button>
-        <button class="cond-btn" data-cond="Très bon">Très bon</button>
-        <button class="cond-btn" data-cond="Bon">Bon</button>
-      </div>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Taille</div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Taille</div>
       <div class="size-grid" id="sizeGrid">
         <button class="size-btn active" data-size="all">Tout</button>
         <button class="size-btn" data-size="XS">XS</button>
@@ -192,19 +243,17 @@
       </div>
     </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-title">Prix (€)</div>
-      <div class="price-range">
-        <div class="price-inputs">
-          <input type="number" class="price-input" id="priceMin" placeholder="Min" min="0">
-          <span class="price-sep">—</span>
-          <input type="number" class="price-input" id="priceMax" placeholder="Max" max="500">
-        </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Prix (€)</div>
+      <div class="price-inputs">
+        <input type="number" class="price-input" id="priceMin" placeholder="Min" min="0">
+        <span class="price-sep">—</span>
+        <input type="number" class="price-input" id="priceMax" placeholder="Max" max="500">
       </div>
     </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-title">Tags</div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Tags</div>
       <ul class="filter-list">
         <li><label class="filter-check"><input type="checkbox" value="new" id="tag-new" class="tag-check"><span class="filter-box"></span><span class="filter-label">Nouveautés</span></label></li>
         <li><label class="filter-check"><input type="checkbox" value="rare" class="tag-check"><span class="filter-box"></span><span class="filter-label">Pièces rares</span></label></li>
@@ -212,20 +261,26 @@
       </ul>
     </div>
 
-    <button class="reset-btn" id="resetBtn">Réinitialiser les filtres</button>
-  </aside>
-
-  <!-- MAIN -->
-  <div>
-    <div class="cat-header">
-      <div class="cat-breadcrumb">Accueil / <span>Catalogue</span></div>
-      <div class="cat-sort">
-        <span class="cat-count" id="resultsCount">12 pièces</span>
-      </div>
-    </div>
-    <div class="active-filters" id="activeFilters"></div>
-    <div class="products-grid" id="productsGrid"></div>
   </div>
+  <div class="drawer-foot">
+    <button class="drawer-reset" id="resetBtn">Réinitialiser</button>
+    <button class="drawer-apply" onclick="closeDrawer()">Voir les résultats</button>
+  </div>
+</div>
+
+<div class="catalogue-layout">
+  <div class="cat-toolbar">
+    <div class="cat-left">
+      <button class="filter-btn" onclick="openDrawer()">
+        <div class="filter-btn-icon"><span></span><span></span><span></span></div>
+        Filtres & Triage
+        <span class="filter-badge" id="filterBadge" style="display:none">0</span>
+      </button>
+      <span class="cat-count" id="resultsCount">12 pièces</span>
+    </div>
+  </div>
+  <div class="active-filters" id="activeFilters"></div>
+  <div class="products-grid" id="productsGrid"></div>
 </div>
 
 <div class="marquee-wrap">
@@ -255,6 +310,30 @@
 <script>
 let filters = { cat: 'all', cond: 'all', size: 'all', tags: [], priceMin: 0, priceMax: 9999 };
 
+function openDrawer() {
+  document.getElementById('filterDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  document.getElementById('filterDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateFilterBadge() {
+  let count = 0;
+  if (filters.cat !== 'all') count++;
+  if (filters.cond !== 'all') count++;
+  if (filters.size !== 'all') count++;
+  count += filters.tags.length;
+  if (filters.priceMin > 0) count++;
+  if (filters.priceMax < 9999) count++;
+  const badge = document.getElementById('filterBadge');
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'flex' : 'none';
+}
+
 function renderProducts() {
   let items = [...PRODUCTS];
 
@@ -276,6 +355,7 @@ function renderProducts() {
   else if (sort === 'saving') items.sort((a,b) => (b.oldPrice-b.price) - (a.oldPrice-a.price));
 
   document.getElementById('resultsCount').textContent = `${items.length} pièce${items.length>1?'s':''}`;
+  updateFilterBadge();
 
   if (!items.length) {
     document.getElementById('productsGrid').innerHTML = `<div class="no-results"><h3>Aucune pièce trouvée</h3><p style="font-size:.82rem;color:var(--muted)">Essayez d'élargir vos filtres</p></div>`;
@@ -329,6 +409,8 @@ function removeFilter(key, val) {
   else if (key === 'priceMax') { filters.priceMax=9999; document.getElementById('priceMax').value=''; }
   renderProducts();
 }
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
 document.addEventListener('DOMContentLoaded', () => {
   initShared();
