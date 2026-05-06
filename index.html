@@ -797,13 +797,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold:.1 });
-  document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => obs.observe(el));
 
-  // Build all sections
+  // Build all sections FIRST so dynamic .reveal elements exist before observer scans
   buildSlider();
   buildDrops();
   buildAtelier();
   buildPieces();
+
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => obs.observe(el));
 
   // Start auto-play + progress bar
   goToSlide(0);
